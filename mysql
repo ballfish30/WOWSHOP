@@ -1,0 +1,103 @@
+create database WOWShop default character set utf8;
+use WOWShop;
+
+
+
+drop table if exists `User`;
+CREATE TABLE `User` (
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `accountName` varchar(30) NOT NULL,
+  `passwd` varchar(60) NOT NULL,
+  `userName` varchar(30) DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT '1',
+  `phone` int(10) not null,
+  `email` varchar(25) not null,
+  `emailVerifyCode` varchar(60)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `Role`;
+CREATE TABLE `Role` (
+  `id` int(2) not null AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(20) not null,
+  `desc` varchar(60) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `Permissions`;
+CREATE TABLE `Permissions` (
+  `id` int(2) not null AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(20) not null,
+  `desc` varchar(60) not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `RoleUser`;
+CREATE TABLE `RoleUser` (
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `userId` int(11) not null,
+  `roleId` int(2) not null,
+  CONSTRAINT fkRoleUserId FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE,
+  CONSTRAINT fkRoleId FOREIGN KEY (roleId) REFERENCES Role(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `PermissionsRole`;
+CREATE TABLE `PermissionsRole` (
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `perId` int(2) not null,
+  `roleId` int(2) not null,
+  CONSTRAINT fkRoleRoleId FOREIGN KEY (roleId) REFERENCES Role(id) ON DELETE CASCADE,
+  CONSTRAINT fkPerPermissionId FOREIGN KEY (perId) REFERENCES Permissions(id) ON DELETE CASCADE
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `Category`;
+CREATE TABLE `Category` (
+  `id` int(2) not null AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(20) not null,
+  `icon` blob not null
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `SecondCategory`;
+CREATE TABLE `secondCategory` (
+  `id` int(5) not null AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(20) not null,
+  `categoryId` int(2) not null,
+  CONSTRAINT fkCategoryId FOREIGN KEY (categoryId) REFERENCES Category(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `Product`;
+CREATE TABLE `Product` (
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `name` varchar(20) not null,
+  `introduction` varchar(120) not null,
+  `img` blob not null,
+  `price` int(9) not null,
+  `invetory` int(9) not null,
+  `quality` enum('粗糙','普通','優秀','精良','史詩','神器') not null,
+  `itemLevel` int(3) not null,
+  `secondCategoryId` int(11) not null,
+  CONSTRAINT fkProductSecondCategoryId FOREIGN KEY (secondCategoryId) REFERENCES SecondCategory(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `Orders`;
+CREATE TABLE `Orders` (
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `userId` int not null,
+  `orderStatus` enum('未處理','處理中','已完成','已取消') not null,
+  `paymentStatus` enum("未付款","已付款","退款中","已退款") not null,
+  `paymentType` enum("信用卡","現金付款") not null,
+  `paymentDateTime` datetime default NOW(),
+  `receiver` varchar(20),
+  `subTotal` int(9) default 0,
+  `done` boolean default '1',
+  CONSTRAINT fkOrderUserId FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+drop table if exists `Cart`;
+CREATE TABLE `Cart` (
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `orderId` int(11) not null,
+  `productId` int(11) not null,
+  `quantity` int(9) default '0',
+  `total` int(9) default '0',
+  CONSTRAINT fkOrderOrderId FOREIGN KEY (orderId) REFERENCES Orders(id) ON DELETE CASCADE,
+  CONSTRAINT fkProductProductId FOREIGN KEY (productId) REFERENCES Product(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
