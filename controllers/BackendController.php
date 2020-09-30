@@ -2,75 +2,68 @@
 
 class BackendController extends Controller
 {
-  function index()
-  {
-    $this->view("Backend/index");
-  }
+    public function index()
+    {
+        $this->view("Backend/index");
+    }
 
+    public function members()
+    {
+        $this->view("Backend/members");
+    }
 
-
-  function members()
-  {
-    $this->view("Backend/members");
-  }
-
-
-
-  function memberisActive()
-  {
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $userId = $_GET['userId'];
-    $sql = <<<mutil
+    public function memberisActive()
+    {
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $userId = $_GET['userId'];
+        $sql = <<<mutil
       select * from user where id = '$userId';
       mutil;
-    $result = mysqli_query($link, $sql);
-    $search = mysqli_fetch_assoc($result);
-    if ($search['isActive']) {
-      $sql = <<<mutil
+        $result = mysqli_query($link, $sql);
+        $search = mysqli_fetch_assoc($result);
+        if ($search['isActive']) {
+            $sql = <<<mutil
       update user
       set
         isActive = 0
       where
         id = '$userId';
       mutil;
-    } else {
-      $sql = <<<mutil
+        } else {
+            $sql = <<<mutil
       update user
       set
         isActive = 1
       where
         id = '$userId';
       mutil;
+        }
+        if (mysqli_query($link, $sql)) {
+            echo "已成功";
+        } else {
+            echo "失敗";
+        }
     }
-    if (mysqli_query($link, $sql)) {
-      echo "已成功";
-    } else {
-      echo "失敗";
+
+    public function categorys()
+    {
+      $smarty = $this->smarty();
+      $categorys = $this->model('Category');
     }
-  }
 
-
-
-  function categorys()
-  {
-    $this->view("Backend/categorys");
-  }
-
-
-
-  function categoryCreate()
-  {
-    if($_SERVER['REQUEST_METHOD']=='GET') {
-      if(isset($_GET['Message'])){
-          echo $_GET['Message'];
-      }
-      return $this->view("Backend/categoryCreate");
-    }
-    $categoryName = $_POST['categoryName'];
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $sql = <<<mutil
+    public function categoryCreate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if (isset($_GET['Message'])) {
+                echo $_GET['Message'];
+            }
+            return $this->view("Backend/categoryCreate");
+        }
+        $categoryName = $_POST['categoryName'];
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $sql = <<<mutil
         insert into category(
           categoryName
         )
@@ -78,82 +71,73 @@ class BackendController extends Controller
           "$categoryName"
         )
     mutil;
-    mysqli_query($link, $sql);
-    return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
-  }
-
-
-
-  function categoryUpdate()
-  {
-    if($_SERVER['REQUEST_METHOD']=='GET') {
-      if(isset($_GET['Message'])){
-          echo $_GET['Message'];
-      }
-      return $this->view("Backend/categoryUpdate");
+        mysqli_query($link, $sql);
+        return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
     }
-    $categoryName = $_POST['categoryName'];
-    $categoryId = $_POST['categoryId'];
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $sql = <<<mutil
+
+    public function categoryUpdate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if (isset($_GET['Message'])) {
+                echo $_GET['Message'];
+            }
+            return $this->view("Backend/categoryUpdate");
+        }
+        $categoryName = $_POST['categoryName'];
+        $categoryId = $_POST['categoryId'];
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $sql = <<<mutil
     update category
     set
       categoryName = "$categoryName"
     where
         id = '$categoryId';
     mutil;
-    mysqli_query($link, $sql);
-    return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
-  }
+        mysqli_query($link, $sql);
+        return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
+    }
 
-
-
-
-  function categoryDelete()
-  {
-    $categoryId = $_GET['categoryId'];
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $sql = <<<mutil
+    public function categoryDelete()
+    {
+        $categoryId = $_GET['categoryId'];
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $sql = <<<mutil
       DELETE FROM category
       WHERE
       id = "$categoryId";
     mutil;
-    if (mysqli_query($link, $sql)) {
-      echo "刪除成功";
-      return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
-    } else {
-      echo "刪除失敗";
-      return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
+        if (mysqli_query($link, $sql)) {
+            echo "刪除成功";
+            return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
+        } else {
+            echo "刪除失敗";
+            return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
+        }
     }
-  }
 
-
-
-  function products()
-  {
-    $this->view("Backend/products");
-  }
-
-
-
-  function productCreate()
-  {
-    if($_SERVER['REQUEST_METHOD']=='GET') {
-      if(isset($_GET['Message'])){
-          echo $_GET['Message'];
-      }
-      return $this->view("Backend/productCreate");
+    public function products()
+    {
+        $this->view("Backend/products");
     }
-    $productName = $_POST['productName'];
-    $categoryId = $_POST['categoryId'];
-    $productPrice = $_POST['productPrice'];
-    $productDescription = $_POST['productDescription'];
-    $target_dir = "productImg/";
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $sql = <<<mutil
+
+    public function productCreate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if (isset($_GET['Message'])) {
+                echo $_GET['Message'];
+            }
+            return $this->view("Backend/productCreate");
+        }
+        $productName = $_POST['productName'];
+        $categoryId = $_POST['categoryId'];
+        $productPrice = $_POST['productPrice'];
+        $productDescription = $_POST['productDescription'];
+        $target_dir = "productImg/";
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $sql = <<<mutil
         insert into product(
           productName, price, description, categoryId
         )
@@ -161,34 +145,33 @@ class BackendController extends Controller
           "$productName", "$productPrice", "$productDescription", "$categoryId"
         )
     mutil;
-    mysqli_query($link, $sql);
-    //取的剛新增資料的ＩＤ
-    $newID = mysqli_insert_id($link);
-    $sql = <<<mutil
+        mysqli_query($link, $sql);
+        //取的剛新增資料的ＩＤ
+        $newID = mysqli_insert_id($link);
+        $sql = <<<mutil
         UPDATE product
         SET
           picture = "$target_dir$newID.jpg"
         where
           id = "$newID";
     mutil;
-    mysqli_query($link, $sql);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newID . ".jpg");
-    return header("Location: http://localhost:8888/PID_Assignment/backend/products");
-  }
-
-
-
-  function productUpdate(){
-    if($_SERVER['REQUEST_METHOD']=='GET') {
-      if(isset($_GET['Message'])){
-          echo $_GET['Message'];
-      }
-      return $this->view("Backend/productUpdate");
+        mysqli_query($link, $sql);
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newID . ".jpg");
+        return header("Location: http://localhost:8888/PID_Assignment/backend/products");
     }
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $target_dir = "productImg/";
-    $sql = <<<mutil
+
+    public function productUpdate()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+            if (isset($_GET['Message'])) {
+                echo $_GET['Message'];
+            }
+            return $this->view("Backend/productUpdate");
+        }
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $target_dir = "productImg/";
+        $sql = <<<mutil
         UPDATE product
         SET
           productName = "$_POST[productName]",
@@ -198,34 +181,31 @@ class BackendController extends Controller
         where
           id = "$_POST[productId]";
     mutil;
-    echo $sql;
-    mysqli_query($link, $sql);
-    move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_POST["productId"] . ".jpg");
-    return header("Location: http://localhost:8888/PID_Assignment/backend/products");
-  }
+        echo $sql;
+        mysqli_query($link, $sql);
+        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_POST["productId"] . ".jpg");
+        return header("Location: http://localhost:8888/PID_Assignment/backend/products");
+    }
 
-
-
-  function productDelete(){
-    // 資料庫連線參數
-    $link = include 'config.php';
-    $productId = $_GET['productId'];
-    $sql = <<<mutil
+    public function productDelete()
+    {
+        // 資料庫連線參數
+        $link = include 'config.php';
+        $productId = $_GET['productId'];
+        $sql = <<<mutil
     delete from product where id = $productId
     mutil;
-    mysqli_query($link, $sql);
-    return $this->view('Backend/products');
-  }
+        mysqli_query($link, $sql);
+        return $this->view('Backend/products');
+    }
 
+    public function order()
+    {
+        $this->view("Backend/order");
+    }
 
-
-  function order(){
-    $this->view("Backend/order");
-  }
-
-
-  
-  function orders(){
-    $this->view("Backend/orders");
-  }
+    public function orders()
+    {
+        $this->view("Backend/orders");
+    }
 }

@@ -50,7 +50,7 @@ class Controller
         setcookie("$name", "", -60 * 60 * 24 * 7, '/');
     }
 
-    public function hashUserId($UserId)
+    public function hashSSID($UserId)
     {
         return hash('sha256', "$UserId");
     }
