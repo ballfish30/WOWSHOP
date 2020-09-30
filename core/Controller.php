@@ -6,6 +6,8 @@ class Controller
     public $dbuser = 'root';
     public $dbpass = 'root';
     public $dbname = 'WOWShop';
+    private $key = '123456789';
+    private $en_method = 'AES-256-ECB';
 
     public function __construct()
     {
@@ -20,16 +22,6 @@ class Controller
         return new $model();
     }
 
-    public function view($view, $data = array())
-    {
-        require_once "views/$view.php";
-    }
-
-    public function sql_connect()
-    {
-        return mysqli_connect($this->dbhost, $this->dbuser, $this->dbpass, $this->dbname, 8443);
-    }
-
     public function smarty()
     {
         require 'class/Smarty.class.php';
@@ -42,14 +34,17 @@ class Controller
         return $smarty;
     }
 
-    public function pdo()
-    {
-        try {
-            $dsn = sprintf("mysql:host=%s;dbname=%s;charset=utf8", "localhost", "WOWShop");
-            $this->_dbHandle = new PDO($dsn, "root", "root", array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
-        } catch (PDOException $e) {
-            exit('錯誤: ' . $e->getMessage());
-        }
+    public function getCookie($name){
+        return openssl_decrypt($_COOKIE["$name"], $this->en_method, $this->key);
+    }
+
+    public function setCookie($name, $data){
+        $data = openssl_encrypt($data,$this->en_method,$this->key);
+        setcookie("$name", $data, 60*60*24*7);
+    }
+
+    public function delCookie($name){
+        setcookie("$name", "", -60*60*24*7);
     }
 
 }

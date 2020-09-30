@@ -3,37 +3,24 @@
 class UserController extends Controller
 {
 
-    function index()
+    public function index()
     {
-        $data['name'] = 123;
-        $data['icon'] = 23456;
-        var_dump($this->model('Category')->add($data));
+        $this->view("User/login");
     }
 
     // 登入
-    function login()
+    public function login()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
-        //smarty
-        include 'main.php';
+        $smarty = $this->smarty();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return $smarty->display('user/login.php');
         }
         // POST
         $accountName = $_POST['accountName'];
         $passwd = $_POST['passwd'];
-        // 取的資料庫連線
-        $link = include 'config.php';
-        $sql = <<<mutil
-            select * from user where accountName = "$accountName";
-        mutil;
-        $result = mysqli_query($link, $sql);
-        // 取得使用者
-        $user = mysqli_fetch_assoc($result);
+        $user = $this->model('User')->selectAccountName($accountName);
         // 判斷使用者
-        if ($user === Null) {
+        if ($user === null) {
             $smarty->assign('message', '無使用者');
             return $smarty->display('user/login.php');
         }
@@ -49,24 +36,21 @@ class UserController extends Controller
     }
 
     // 登出
-    function logout()
+    public function logout()
     {
-        if (!isset($_SESSION)) {
-            session_start();
-        }
         // 清除session
         session_destroy();
         //smarty
-        include 'main.php';
+        $smarty = $this->smarty();
         $smarty->assign('message', '已登出');
         $smarty->display('user/login.php');
     }
 
     // 註冊
-    function register()
+    public function register()
     {
         //smarty
-        include 'main.php';
+        $smarty = $this->smarty();
         if (!isset($_SESSION)) {
             session_start();
         }
@@ -86,7 +70,7 @@ class UserController extends Controller
         $result = mysqli_query($link, $sql);
         $user = mysqli_fetch_assoc($result);
         // 判斷使用者‘
-        if ($user != Null) {
+        if ($user != null) {
             $smarty->assign('userName', "$userName");
             $smarty->assign('email', "$email");
             $smarty->assign('message', '此帳號已註冊');

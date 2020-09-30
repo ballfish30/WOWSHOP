@@ -1,4 +1,5 @@
 <?php
+
 class Model
 {
     protected $_dbHandle;
@@ -28,6 +29,15 @@ class Model
     public function select($id)
     {
         $sql = sprintf("select * from `%s` where `id` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetch();
+    }
+
+    // 根據條件 (name) 查詢
+    public function selectAccountName($accountName)
+    {
+        $sql = sprintf("select * from `%s` where `accountName` = '%s'", $this->_table, $accountName);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetch();
