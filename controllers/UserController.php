@@ -5,7 +5,8 @@ class UserController extends Controller
 
     public function index()
     {
-        $this->view("User/login");
+        $smarty = $this->smarty();
+        return $smarty->display('user/login.html');
     }
 
     // 登入
@@ -13,7 +14,7 @@ class UserController extends Controller
     {
         $smarty = $this->smarty();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            return $smarty->display('user/login.php');
+            return $smarty->display('user/login.html');
         }
         // POST
         $accountName = $_POST['accountName'];
@@ -22,12 +23,12 @@ class UserController extends Controller
         // 判斷使用者
         if ($user === null) {
             $smarty->assign('message', '無使用者');
-            return $smarty->display('user/login.php');
+            return $smarty->display('user/login.html');
         }
         // 判斷密碼
         elseif (!password_verify($passwd, $user['passwd'])) {
             $_SESSION['message'] = '密碼錯誤';
-            return $smarty->display('user/login.php');
+            return $smarty->display('user/login.html');
         }
         $_SESSION['userId'] = $user['id'];
         $_SESSION['userName'] = $user['userName'];
@@ -43,7 +44,7 @@ class UserController extends Controller
         //smarty
         $smarty = $this->smarty();
         $smarty->assign('message', '已登出');
-        $smarty->display('user/login.php');
+        $smarty->display('user/login.html');
     }
 
     // 註冊
@@ -55,41 +56,28 @@ class UserController extends Controller
             session_start();
         }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-            return $smarty->display('user/register.php');
+            return $smarty->display('user/register.html');
         }
         // POST
-        $accountName = $_POST['accountName'];
-        $passwd = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
-        $userName = $_POST['userName'];
-        $email = $_POST['email'];
-        // 取的資料庫連線
-        $link = include 'config.php';
-        $sql = <<<mutil
-            select * from user where accountName="$accountName"
-        mutil;
-        $result = mysqli_query($link, $sql);
-        $user = mysqli_fetch_assoc($result);
+        $data['accountName'] = $_POST['accountName'];
+        $data['passwd'] = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
+        $data['userName'] = $_POST['userName'];
+        $data['email'] = $_POST['email'];
+        $data['phone'] = $_POST['phone'];
+        $user = $this->model('User');
         // 判斷使用者‘
-        if ($user != null) {
-            $smarty->assign('userName', "$userName");
-            $smarty->assign('email', "$email");
+        if ($user->selectAccountName($data['accountName']) != null) {
+            $smarty->assign('userName', $data['userName']);
+            $smarty->assign('email', $data['email']);
             $smarty->assign('message', '此帳號已註冊');
-            return $smarty->display('user/register.php');
+            return $smarty->display('user/register.html');
         }
-        $sql = <<<mutil
-          insert into user(
-            accountName, userName, passwd, email
-          )
-          values(
-            "$accountName", "$userName",  "$passwd", "$email"
-          )
-        mutil;
-        if (mysqli_query($link, $sql)) {
+        if ($user->add($data)) {
             $smarty->assign('message', '註冊成功，請登入');
-            return $smarty->display('user/login.php');
+            return $smarty->display('user/login.html');
         } else {
             $smarty->assign('message', '註冊失敗');
-            return $smarty->display('user/register.php');
+            return $smarty->display('user/register.html');
         }
     }
 }

@@ -34,17 +34,25 @@ class Controller
         return $smarty;
     }
 
-    public function getCookie($name){
+    public function getCookie($name)
+    {
         return openssl_decrypt($_COOKIE["$name"], $this->en_method, $this->key);
     }
 
-    public function setCookie($name, $data){
-        $data = openssl_encrypt($data,$this->en_method,$this->key);
-        setcookie("$name", $data, 60*60*24*7);
+    public function setCookie($name, $data)
+    {
+        $data = openssl_encrypt($data, $this->en_method, $this->key);
+        setcookie("$name", $data, 60 * 60 * 24 * 7, '/');
     }
 
-    public function delCookie($name){
-        setcookie("$name", "", -60*60*24*7);
+    public function delCookie($name)
+    {
+        setcookie("$name", "", -60 * 60 * 24 * 7, '/');
+    }
+
+    public function hashUserId($UserId)
+    {
+        return hash('sha256', "$UserId");
     }
 
 }
