@@ -12,7 +12,7 @@ class Model
             $dsn = sprintf("mysql:host=%s;dbname=%s;charset=utf8", $host, $dbname);
             $this->_dbHandle = new PDO($dsn, $user, $pass, array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC));
         } catch (PDOException $e) {
-            exit('錯誤: ' . $e->getMessage());
+            echo '連線錯誤';
         }
     }
 
@@ -34,10 +34,19 @@ class Model
         return $sth->fetch();
     }
 
-    // 根據條件 (name) 查詢
+    // 根據條件 (accountName) 查詢
     public function selectAccountName($accountName)
     {
         $sql = sprintf("select * from `%s` where `accountName` = '%s'", $this->_table, $accountName);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetch();
+    }
+
+    // 根據條件 (name) 查詢
+    public function selectName($name)
+    {
+        $sql = sprintf("select * from `%s` where `name` = '%s'", $this->_table, $name);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetch();

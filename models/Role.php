@@ -12,7 +12,7 @@ class Role extends Model
         $this->_model = get_class($this);
         $this->_model = rtrim($this->_model, 'Model');
         // 資料庫表名與類名一致
-        $this->_table = strtolower($this->_model);
+        $this->_table = 'Role';
     }
 
     public function __destruct()

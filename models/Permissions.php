@@ -1,6 +1,6 @@
 <?php
 
-class Permission extends Model
+class Permissions extends Model
 {
     protected $_model;
     protected $_table;
