@@ -1,0 +1,11 @@
+這是新增角色與該有的權限<br>
+{{include file='views/backend/head.html'}}
+<form method="post" action="/WOWShop/backend/roleCreate">
+  角色名：<input type='text' name='name' required="required"><br>
+  角色描述：<input type='text' name='desc' required="required"><br>
+  {{foreach from=$permissions item=permission name=foo}}
+  <input type="checkbox" value="{{$permission.id}}" name="permissions[]">{{$permission.name}}<br>
+  {{/foreach}}
+  <input type="submit" value="建立">
+</form>
+{{include file='views/backend/footer.html'}}

@@ -34,6 +34,15 @@ class Model
         return $sth->fetch();
     }
 
+    // 根據條件 (roleId) 查詢
+    public function selectRoleId($id)
+    {
+        $sql = sprintf("select perId from `%s` where `roleId` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
     // 根據條件 (accountName) 查詢
     public function selectAccountName($accountName)
     {

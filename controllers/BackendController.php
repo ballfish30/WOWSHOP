@@ -4,208 +4,56 @@ class BackendController extends Controller
 {
     public function index()
     {
-        $this->view("Backend/index");
+        $smarty = $this->smarty();
+        return $smarty->display('Backend/index.html');
     }
 
-    public function members()
+    //新增角色同時賦予權限
+    public function roleCreate()
     {
-        $this->view("Backend/members");
-    }
-
-    public function memberisActive()
-    {
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $userId = $_GET['userId'];
-        $sql = <<<mutil
-      select * from user where id = '$userId';
-      mutil;
-        $result = mysqli_query($link, $sql);
-        $search = mysqli_fetch_assoc($result);
-        if ($search['isActive']) {
-            $sql = <<<mutil
-      update user
-      set
-        isActive = 0
-      where
-        id = '$userId';
-      mutil;
-        } else {
-            $sql = <<<mutil
-      update user
-      set
-        isActive = 1
-      where
-        id = '$userId';
-      mutil;
+        $smarty = $this->smarty();
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $smarty->assign('permissions', $this->model('Permissions')->selectAll());
+            return $smarty->display('Backend/roleCreate.html');
         }
-        if (mysqli_query($link, $sql)) {
-            echo "已成功";
-        } else {
-            echo "失敗";
+        //POST
+        $permissions = $_POST['permissions'];
+        $role = $this->model('Role');
+        $permissionRole = $this->model('permissionRole');
+        $data['name'] = $_POST['name'];
+        $data['desc'] = $_POST['desc'];
+        $role->add($data);
+        $roleId = $role->selectName($_POST['name'])['id'];
+        $data = [];
+        foreach ($permissions as $i) {
+            $data['perId'] = $i;
+            $data['roleId'] = $roleId;
+            $permissionRole->add($data);
         }
+        return $smarty->display('Backend/index.html');
     }
 
-    public function categorys()
+    //修改角色並調整權限
+    public function roleUpdate($roleId)
     {
-      $smarty = $this->smarty();
-      $categorys = $this->model('Category');
-    }
-
-    public function categoryCreate()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            if (isset($_GET['Message'])) {
-                echo $_GET['Message'];
-            }
-            return $this->view("Backend/categoryCreate");
+        $smarty = $this->smarty();
+        $role = $this->model('Role');
+        $permissions = $this->model('Permissions');
+        $permissionRole = $this->model('PermissionRole');
+        var_dump($permissionRole->selectRoleId($roleId));
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $smarty->assign('role', $role->select($roleId));
+            $smarty->assign('permissions', $permissions->selectAll());
+            $smarty->assign('permissionRole', $permissionRole->selectRoleId($roleId));
+            return $smarty->display('Backend/roleUpdate.html');
         }
-        $categoryName = $_POST['categoryName'];
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $sql = <<<mutil
-        insert into category(
-          categoryName
-        )
-        values(
-          "$categoryName"
-        )
-    mutil;
-        mysqli_query($link, $sql);
-        return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
+        //POST
     }
 
-    public function categoryUpdate()
+    //調整角色
+    public function rolechange()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            if (isset($_GET['Message'])) {
-                echo $_GET['Message'];
-            }
-            return $this->view("Backend/categoryUpdate");
-        }
-        $categoryName = $_POST['categoryName'];
-        $categoryId = $_POST['categoryId'];
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $sql = <<<mutil
-    update category
-    set
-      categoryName = "$categoryName"
-    where
-        id = '$categoryId';
-    mutil;
-        mysqli_query($link, $sql);
-        return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
+
     }
 
-    public function categoryDelete()
-    {
-        $categoryId = $_GET['categoryId'];
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $sql = <<<mutil
-      DELETE FROM category
-      WHERE
-      id = "$categoryId";
-    mutil;
-        if (mysqli_query($link, $sql)) {
-            echo "刪除成功";
-            return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
-        } else {
-            echo "刪除失敗";
-            return header("Location: http://localhost:8888/PID_Assignment/backend/categorys");
-        }
-    }
-
-    public function products()
-    {
-        $this->view("Backend/products");
-    }
-
-    public function productCreate()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            if (isset($_GET['Message'])) {
-                echo $_GET['Message'];
-            }
-            return $this->view("Backend/productCreate");
-        }
-        $productName = $_POST['productName'];
-        $categoryId = $_POST['categoryId'];
-        $productPrice = $_POST['productPrice'];
-        $productDescription = $_POST['productDescription'];
-        $target_dir = "productImg/";
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $sql = <<<mutil
-        insert into product(
-          productName, price, description, categoryId
-        )
-        values(
-          "$productName", "$productPrice", "$productDescription", "$categoryId"
-        )
-    mutil;
-        mysqli_query($link, $sql);
-        //取的剛新增資料的ＩＤ
-        $newID = mysqli_insert_id($link);
-        $sql = <<<mutil
-        UPDATE product
-        SET
-          picture = "$target_dir$newID.jpg"
-        where
-          id = "$newID";
-    mutil;
-        mysqli_query($link, $sql);
-        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $newID . ".jpg");
-        return header("Location: http://localhost:8888/PID_Assignment/backend/products");
-    }
-
-    public function productUpdate()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-            if (isset($_GET['Message'])) {
-                echo $_GET['Message'];
-            }
-            return $this->view("Backend/productUpdate");
-        }
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $target_dir = "productImg/";
-        $sql = <<<mutil
-        UPDATE product
-        SET
-          productName = "$_POST[productName]",
-          price = "$_POST[productPrice]",
-          description = "$_POST[productDescription]",
-          categoryId = $_POST[categoryId]
-        where
-          id = "$_POST[productId]";
-    mutil;
-        echo $sql;
-        mysqli_query($link, $sql);
-        move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_POST["productId"] . ".jpg");
-        return header("Location: http://localhost:8888/PID_Assignment/backend/products");
-    }
-
-    public function productDelete()
-    {
-        // 資料庫連線參數
-        $link = include 'config.php';
-        $productId = $_GET['productId'];
-        $sql = <<<mutil
-    delete from product where id = $productId
-    mutil;
-        mysqli_query($link, $sql);
-        return $this->view('Backend/products');
-    }
-
-    public function order()
-    {
-        $this->view("Backend/order");
-    }
-
-    public function orders()
-    {
-        $this->view("Backend/orders");
-    }
 }

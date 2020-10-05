@@ -21,13 +21,13 @@ class App
         unset($url[0]);
         unset($url[1]);
         $params = $url ? array_values($url) : array();
-        if ($methodName != 'login' and $methodName != 'register' and $methodName != 'admin' and $methodName != 'test') {
-            if (!isset($_SESSION['userId'])) {
-                include 'main.php';
-                $smarty->assign('message', '請登入帳號');
-                return $smarty->display('user/login.php');
-            }
-        }
+        // if ($methodName != 'login' and $methodName != 'register' and $methodName != 'admin' and $methodName != 'test') {
+        //     if (!isset($_SESSION['userId'])) {
+        //         include 'main.php';
+        //         $smarty->assign('message', '請登入帳號');
+        //         return $smarty->display('user/login.php');
+        //     }
+        // }
         call_user_func_array(array($controller, $methodName), $params);
     }
 

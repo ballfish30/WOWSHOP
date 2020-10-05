@@ -66,11 +66,11 @@ class PopulateController extends Controller
         }
     }
 
-    public function test()
-    {
-        $user = $this->model('User');
-        $role = $this->model('Role');
-        echo $user->selectAccountName('admin')['id'];
-        echo $role->selectName('超級管理員')['id'];
-    }
+    // public function test()
+    // {
+    //     $user = $this->model('User');
+    //     $role = $this->model('Role');
+    //     echo $user->selectAccountName('admin')['id'];
+    //     echo $role->selectName('超級管理員')['id'];
+    // }
 }

@@ -30,10 +30,8 @@ class UserController extends Controller
             $_SESSION['message'] = '密碼錯誤';
             return $smarty->display('user/login.html');
         }
-        $_SESSION['userId'] = $user['id'];
-        $_SESSION['userName'] = $user['userName'];
         $smarty->assign('userName', $_SESSION['userName']);
-        return header("Location: /blog/blog/index/1");
+        return $smarty->display('Backend/index.html');
     }
 
     // 登出
