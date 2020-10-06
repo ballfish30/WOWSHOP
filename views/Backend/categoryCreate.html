@@ -1,0 +1,27 @@
+這是新增類別<br>
+{{include file='views/backend/head.html'}}
+<style>
+  #preview {
+    display: none;
+  }
+  #preview.show {
+    display: block;
+  }
+</style>
+<form method="post" action="/WOWShop/backend/categoryCreate" enctype="multipart/form-data">
+  名稱：<input type='text' name='name' required="required"><br>
+  縮圖：<input type="file" name="fileToUpload" id="fileToUpload">
+  <div class="c-zt-pic">
+    <img id="preview" width=300px src="">
+  </div><br>
+  <input type="submit" value="建立">
+</form>
+<script>
+  $('#fileToUpload').change(function () {
+    var f = document.getElementById('fileToUpload').files[0];
+    var src = window.URL.createObjectURL(f);
+    document.getElementById('preview').src = src;
+    preview.classList.toggle('show');
+  });
+</script>
+{{include file='views/backend/footer.html'}}

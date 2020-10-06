@@ -43,6 +43,15 @@ class Model
         return $sth->fetchAll();
     }
 
+    // 根據條件 (categoryId) 查詢
+    public function selectcategoryId($id)
+    {
+        $sql = sprintf("select * from `%s` where `categoryId` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
     // 根據條件 (accountName) 查詢
     public function selectAccountName($accountName)
     {

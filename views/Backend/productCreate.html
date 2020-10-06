@@ -1,0 +1,71 @@
+這是新增商品<br>
+{{include file='views/backend/head.html'}}
+<script src='/WOWSHOP/js/jquery.min.js'></script>
+<style>
+  #preview {
+    display: none;
+  }
+  #preview.show {
+    display: block;
+  }
+</style>
+<form method="post" action="/WOWShop/backend/productCreate" enctype="multipart/form-data">
+  名稱：<input type='text' name='name' required="required"><br>
+  <!-- {{foreach from=$categorys item=category name=foo}}
+  <img height="250px" width="250px" src="data:image/jpg;base64,{{$category.icon}}"/>
+  {{/foreach}} -->
+  類別：<select name="category" id="category">
+        {{foreach from=$categorys item=category name=foo}}
+          <option value="{{$category.id}}">{{$category.name}}</option>
+        {{/foreach}}
+      </select><br>
+  類別細項：<select name="secondCategory" id="secondCategory">
+
+          </select><br>
+  介紹：<br><textarea rows="4" cols="50" name="introduction"></textarea><br>
+  裝等：<input type='number' name='itemLevel' required="required"><br>
+  品質：<select name="quality">
+        <option>粗糙</option>
+        <option>普通</option>
+        <option>優秀</option>
+        <option>精良</option>
+        <option>史詩</option>
+        <option>神器</option>
+      </select><br>
+  價格：<input type='number' name='price' required="required"><br>
+  庫存：<input type='number' name='invetory' required="required"><br>
+  圖片：<input type="file" name="fileToUpload" id="fileToUpload">
+  <div class="c-zt-pic">
+    <img id="preview" width=300px src="">
+  </div><br>
+  <input type="submit" value="建立">
+</form>
+<script>
+  $('#fileToUpload').change(function () {
+    var f = document.getElementById('fileToUpload').files[0];
+    var src = window.URL.createObjectURL(f);
+    document.getElementById('preview').src = src;
+    preview.classList.toggle('show');
+  });
+
+  $('#category').change(function(){
+    $.ajax({
+          type:"POST",
+          url:"/WOWShop/backend/secondCategorys",
+          data: {
+                  'categoryId': $(this).val()
+          }
+        })
+        .done(function (data) {
+          $data = JSON.parse(data);
+          $html = '';
+          for(secondCategory of $data){
+            $html += "<option value='"+ secondCategory['id'] +"'>"+secondCategory['name']+"</option>"
+          }
+          $('#secondCategory').html($html);
+        })
+  });
+
+  $('#category').change();
+</script>
+{{include file='views/backend/footer.html'}}
