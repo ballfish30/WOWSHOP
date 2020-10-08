@@ -1,0 +1,20 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <a href="/WOWSHOP/backend/secondCategoryCreate" class="create">新增</a>
+  <table text-align="center" text-valign="middle">
+    {{foreach from=$itemlist item=items name=foo}}
+      {{foreach from=$items item=item name=foo}}
+      <tr>
+      {{if $smarty.foreach.foo.first}}
+      <th><img height="50px" width="50px" src="data:image/jpg;base64,{{$item.icon}}"/></th>
+      <th>{{$item.name}}</th>
+      {{else}}
+        <td><a href="#" class="update"><pre>{{$item.name}}</pre></a></td>
+        <td><a href="#" class="cancel">刪除</a></td>
+      {{/if}}
+      </tr>
+      {{/foreach}}
+    {{/foreach}}
+  </table>
+</div>
+{{include file='views/backend/footer.html'}}

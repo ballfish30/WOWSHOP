@@ -26,6 +26,15 @@ class Model
     }
 
     // 根據條件 (id) 查詢
+    public function selectCart($orderId, $productId)
+    {
+        $sql = sprintf("select * from `%s` where `orderId` = '%s' and `productId` = '%s'", $this->_table, $orderId, $productId);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetch();
+    }
+
+    // 根據條件 (id) 查詢
     public function select($id)
     {
         $sql = sprintf("select * from `%s` where `id` = '%s'", $this->_table, $id);
@@ -37,7 +46,25 @@ class Model
     // 根據條件 (roleId) 查詢
     public function selectRoleId($id)
     {
-        $sql = sprintf("select perId from `%s` where `roleId` = '%s'", $this->_table, $id);
+        $sql = sprintf("select * from `%s` where `roleId` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    // 根據條件 (userId, done=false) 查詢
+    public function selectOrder($id)
+    {
+        $sql = sprintf("select * from `%s` where `userId` = '%s' and `done` = 'false'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    // 根據條件 (perId) 查詢
+    public function selectPerId($id)
+    {
+        $sql = sprintf("select * from `%s` where `id` = '%s'", $this->_table, $id);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetchAll();

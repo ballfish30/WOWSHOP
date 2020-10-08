@@ -1,0 +1,29 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <a href="/WOWSHOP/backend/productCreate" class="create">新增</a>
+  <table text-align="center" text-valign="middle">
+    <tr>
+      <th>商品圖</th>
+      <th>名稱</th>
+      <th>裝等</th>
+      <th>品質</th>
+      <th>數量</th>
+      <th>價格</th>
+      <th>介紹</th>
+      <th>刪除</th>
+    </tr>
+    {{foreach from=$products item=product name=foo}}
+      <tr>
+        <td><img height="100px" width="100px" src="data:image/jpg;base64,{{$product.img}}"/></td>
+        <td><a href="#" class="update"><pre>{{$product.name}}</pre></a></td>
+        <td>{{$product.itemLevel}}</td>
+        <td>{{$product.quality}}</td>
+        <td>{{$product.invetory}}</td>
+        <td>{{$product.price}}</td>
+        <td>{{$product.introduction}}</td>
+        <td><a href="#" class="cancel">刪除</a></td>
+      </tr>
+    {{/foreach}}
+  </table>
+</div>
+{{include file='views/backend/footer.html'}}

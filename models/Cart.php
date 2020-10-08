@@ -8,12 +8,11 @@ class Cart extends Model
     {
         // 連線資料庫
         $this->connect("localhost", "root", "root", "WOWShop");
-        return;
         // 獲取模型名稱
         $this->_model = get_class($this);
         $this->_model = rtrim($this->_model, 'Model');
         // 資料庫表名與類名一致
-        $this->_table = strtolower($this->_model);
+        $this->_table = 'Cart';
     }
 
     public function __destruct()

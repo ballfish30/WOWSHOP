@@ -9,6 +9,7 @@
     display: block;
   }
 </style>
+<div style="padding-top:7em;" align="center">
 <form method="post" action="/WOWShop/backend/productCreate" enctype="multipart/form-data">
   名稱：<input type='text' name='name' required="required"><br>
   <!-- {{foreach from=$categorys item=category name=foo}}
@@ -40,6 +41,7 @@
   </div><br>
   <input type="submit" value="建立">
 </form>
+</div>
 <script>
   $('#fileToUpload').change(function () {
     var f = document.getElementById('fileToUpload').files[0];

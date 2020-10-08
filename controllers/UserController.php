@@ -27,10 +27,12 @@ class UserController extends Controller
         }
         // 判斷密碼
         elseif (!password_verify($passwd, $user['passwd'])) {
-            $_SESSION['message'] = '密碼錯誤';
+            $smarty->assign('message', '密碼錯誤');
             return $smarty->display('user/login.html');
         }
-        $smarty->assign('userName', $_SESSION['userName']);
+        $smarty->assign('userName', $user['userName']);
+        $this->setCookie('username', $user['userName']);
+        $this->setCookie('userId', $user['id']);
         return $smarty->display('Backend/index.html');
     }
 
@@ -41,6 +43,8 @@ class UserController extends Controller
         session_destroy();
         //smarty
         $smarty = $this->smarty();
+        $this->delCookie('username');
+        $this->delCookie('userId');
         $smarty->assign('message', '已登出');
         $smarty->display('user/login.html');
     }

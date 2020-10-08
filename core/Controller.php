@@ -11,6 +11,19 @@ class Controller
 
     public function __construct()
     {
+        if (isset($_COOKIE['userId']) and !isset($_COOKIE['orderId'])) {
+            $order = $this->model('Order');
+            $userId = $_COOKIE['userId'];
+            if (empty($order->selectOrder($userId)) === true) {
+                $data['userId'] = $userId;
+                $data['orderStatus'] = '未處理';
+                $data['paymentStatus'] = '未付款';
+                $order->add($data);
+                $this->setCookie('orderId', $order->selectOrder($userId)['0']['id']);
+            } else {
+                $this->setCookie('orderId', $order->selectOrder($userId)['0']['id']);
+            }
+        }
         if (!isset($_SESSION)) {
             session_start();
         }
@@ -41,13 +54,12 @@ class Controller
 
     public function setCookie($name, $data)
     {
-        $data = openssl_encrypt($data, $this->en_method, $this->key);
-        setcookie("$name", $data, 60 * 60 * 24 * 7, '/');
+        setcookie("$name", "$data", time() + 60 * 60 * 24 * 7, '/');
     }
 
     public function delCookie($name)
     {
-        setcookie("$name", "", -60 * 60 * 24 * 7, '/');
+        setcookie("$name", "", time() - 60 * 60 * 24 * 7, '/');
     }
 
     public function hashSSID($UserId)

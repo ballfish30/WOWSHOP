@@ -1,13 +1,16 @@
 這是新增類別細項<br>
 {{include file='views/backend/head.html'}}
-<form method="post" action="/WOWShop/backend/secondCategoryCreate">
-  <select name="category">
-    {{$category.icon}}
-  {{foreach from=$categorys item=category name=foo}}
-    <option value="{{$category.id}}">{{$category.name}}</option>
-  {{/foreach}}
-  </select><br>
-  名稱：<input type='text' name='name' required="required"><br>
-  <input type="submit" value="建立">
-</form>
+<div style="padding-top:7em;" align="center">
+  <form method="post" action="/WOWShop/backend/secondCategoryCreate">
+    類別：
+    <select name="category">
+      {{$category.icon}}
+    {{foreach from=$categorys item=category name=foo}}
+      <option value="{{$category.id}}">{{$category.name}}</option>
+    {{/foreach}}
+    </select><br>
+    名稱：<input type='text' name='name' required="required"><br>
+    <input type="submit" value="建立">
+  </form>
+</div>
 {{include file='views/backend/footer.html'}}

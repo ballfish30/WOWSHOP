@@ -1,4 +1,29 @@
-{{include file='views/store/head.html'}}
+<?php
+/* Smarty version 3.1.34-dev-7, created on 2020-10-08 09:31:05
+  from '/Applications/MAMP/htdocs/WOWSHOP/views/store/store.html' */
+
+/* @var Smarty_Internal_Template $_smarty_tpl */
+if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
+  'version' => '3.1.34-dev-7',
+  'unifunc' => 'content_5f7edc592b78d3_38546901',
+  'has_nocache_code' => false,
+  'file_dependency' => 
+  array (
+    '874aa4cf22dcad80ed27c8f4e3a6b7bc97f5f93e' => 
+    array (
+      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/store.html',
+      1 => 1602149461,
+      2 => 'file',
+    ),
+  ),
+  'includes' => 
+  array (
+    'file:views/store/head.html' => 1,
+  ),
+),false)) {
+function content_5f7edc592b78d3_38546901 (Smarty_Internal_Template $_smarty_tpl) {
+$_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+?>
 <div class="wrap full-wrap">
   <div class="main-wrap">
     <section class="main main-archive">
@@ -71,16 +96,27 @@
 
     <h1>戰場補給</h1>
     <div class="row">
-      {{foreach from=$products item=product name=foo}}
+      <?php
+$_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['products']->value, 'product', false, NULL, 'foo', array (
+));
+$_smarty_tpl->tpl_vars['product']->do_else = true;
+if ($_from !== null) foreach ($_from as $_smarty_tpl->tpl_vars['product']->value) {
+$_smarty_tpl->tpl_vars['product']->do_else = false;
+?>
         <div class="col-md-4">
-          <h3>{{$product.name}}</h3>
+          <h3><?php echo $_smarty_tpl->tpl_vars['product']->value['name'];?>
+</h3>
           <div>
             <div class="pull-left">
-              <img src="data:image/jpg;base64,{{$product.img}}" style="background-size: contain; width:200px; height:250px" border="0" title="{{$product.name}}">
+              <img src="data:image/jpg;base64,<?php echo $_smarty_tpl->tpl_vars['product']->value['img'];?>
+" style="background-size: contain; width:200px; height:250px" border="0" title="<?php echo $_smarty_tpl->tpl_vars['product']->value['name'];?>
+">
             </div>
             <div class="pull-left">
-              <h4>{{$product.price}}$NTD</h4>
-                <input type="hidden" value="{{$product.id}}">
+              <h4><?php echo $_smarty_tpl->tpl_vars['product']->value['price'];?>
+$NTD</h4>
+                <input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['product']->value['id'];?>
+">
                 <div class="form-group">
                   <label>數量：</label>
                   <input type="number" value="1" class="form-control quantity">
@@ -95,12 +131,15 @@
             </div>
           </div>
         </div>
-      {{/foreach}}
+      <?php
+}
+$_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     </div>
   </div><!-- /main-wrap -->
 </div><!-- /wrap -->
 
-<script>
+<?php echo '<script'; ?>
+>
   $(".add-to-cart").on("click", function() {
     $this = $(this);
     $productId = $this.parent().prev().parent().children().next().first().val();
@@ -116,4 +155,6 @@
       alert($data['message']);
     })
   });
-</script>
+<?php echo '</script'; ?>
+><?php }
+}

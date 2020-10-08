@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-05 08:55:46
+/* Smarty version 3.1.34-dev-7, created on 2020-10-08 01:34:01
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/roleCreate.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7adf920e7082_43771923',
+  'unifunc' => 'content_5f7e6c89cc8885_51727072',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e36ed81de4f6395ddc32e3d141df95ee9c07a652' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/roleCreate.html',
-      1 => 1601888142,
+      1 => 1602053316,
       2 => 'file',
     ),
   ),
@@ -22,10 +22,11 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/footer.html' => 1,
   ),
 ),false)) {
-function content_5f7adf920e7082_43771923 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f7e6c89cc8885_51727072 (Smarty_Internal_Template $_smarty_tpl) {
 ?>這是新增角色與該有的權限<br>
 <?php $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
+<div style="padding-top:7em;" align="center">
 <form method="post" action="/WOWShop/backend/roleCreate">
   角色名：<input type='text' name='name' required="required"><br>
   角色描述：<input type='text' name='desc' required="required"><br>
@@ -44,6 +45,7 @@ $_smarty_tpl->tpl_vars['permission']->do_else = false;
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
   <input type="submit" value="建立">
 </form>
+</div>
 <?php $_smarty_tpl->_subTemplateRender('file:views/backend/footer.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 }
 }

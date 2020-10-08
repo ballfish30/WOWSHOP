@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-08 06:17:00
-  from '/Applications/MAMP/htdocs/WOWSHOP/views/backend/head.html' */
+/* Smarty version 3.1.34-dev-7, created on 2020-10-08 06:17:01
+  from '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7eaedc6cf6e2_19527509',
+  'unifunc' => 'content_5f7eaedde501a7_34646039',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    '0b09a42b0251e2c53d20b4da92233f63c9c4b394' => 
+    '6b3f0ff28eb9b789a6233569e02cbf5419ee5716' => 
     array (
-      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/backend/head.html',
-      1 => 1602137784,
+      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html',
+      1 => 1602137817,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5f7eaedc6cf6e2_19527509 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f7eaedde501a7_34646039 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!doctype html>
 <!--
 	Itsy by FreeHTML5.co
@@ -43,7 +43,10 @@ function content_5f7eaedc6cf6e2_19527509 (Smarty_Internal_Template $_smarty_tpl)
     <link rel="stylesheet" href="/WOWSHOP/css/style.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="/WOWSHOP/css/print.css" type="text/css" media="print"/>
     <?php echo '<script'; ?>
- src='/WOWSHOP/js/jquery.min.js''><?php echo '</script'; ?>
+ src='/PID_Assignment/js/jquery-3.0.0.min.js'><?php echo '</script'; ?>
+>
+    <?php echo '<script'; ?>
+ src='/PID_Assignment/js/jquery-migrate-3.0.1.min.js'><?php echo '</script'; ?>
 >
 </head>
 <body class="home sticky-menu sidebar-off" id="top">
@@ -63,21 +66,13 @@ function content_5f7eaedc6cf6e2_19527509 (Smarty_Internal_Template $_smarty_tpl)
                 <div class="table-cell">
                     <ul id="menu-menu-1">
                         <li class="menu-item">
-                            <a href="/WOWShop/store/">商店</a></li>
+                            <a href="/WOWShop/store/">首頁</a></li>
                         <li class="menu-item">
-                          <a href="/WOWShop/user/members">會員</a></li>
+                            <a href="/WOWShop/user/store/carts">購物車</a></li>
                         <li class="menu-item">
-                          <a href="/WOWShop/backend/roles">權限</a></li>
+                            <a href="/WOWShop/user/store/orders">訂單</a></li>
                         <li class="menu-item">
-                          <a href="/WOWShop/user/store/orders">訂單</a></li>
-                        <li class="menu-item">
-                          <a href="/WOWShop/backend/categorys">類別</a>
-                          <ul>
-                            <li><a href="/WOWShop/backend/secondCategory">類別細項</a></li>
-                          </ul>
-                        </li>
-                        <li class="menu-item">
-                            <a href="/WOWShop/backend/products">商品</a></li>
+                            <a href="/WOWShop/user/register">註冊</a></li>
                         <li class='menu-item'>
                             <a href='/WOWShop/user/login'>登入</a></li>
                         <li class="menu-inline menu-item">

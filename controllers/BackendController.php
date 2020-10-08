@@ -8,6 +8,31 @@ class BackendController extends Controller
         return $smarty->display('Backend/index.html');
     }
 
+    //角色
+    public function roles()
+    {
+        $smarty = $this->smarty();
+        $roles = $this->model('Role')->selectAll();
+        $permissionRole = $this->model('PermissionRole');
+        $permission = $this->model('Permissions');
+        $itemlist = array();
+        foreach ($roles as $role) {
+            $items = array();
+            array_push($items, $role);
+            $item = array();
+            foreach ($permissionRole->selectRoleId($role['id']) as $permissionRoles) {
+                foreach ($permission->selectPerId($permissionRoles['perId']) as $permissions) {
+                    array_push($item, $permissions);
+                }
+            }
+            array_push($items, $item);
+            array_push($itemlist, $items);
+            $items = array();
+        }
+        $smarty->assign('itemlist', $itemlist);
+        return $smarty->display('Backend/roles.html');
+    }
+
     //新增角色同時賦予權限
     public function roleCreate()
     {
@@ -55,6 +80,15 @@ class BackendController extends Controller
 
     }
 
+    //類別列表
+    public function categorys()
+    {
+        $smarty = $this->smarty();
+        $caregory = $this->model('Category');
+        $smarty->assign('categorys', $caregory->selectAll());
+        return $smarty->display('Backend/categorys.html');
+    }
+
     //新增類別
     public function categoryCreate()
     {
@@ -84,6 +118,26 @@ class BackendController extends Controller
 
     }
 
+    //類別細項列表
+    public function secondCategory()
+    {
+        $smarty = $this->smarty();
+        $categorys = $this->model('Category')->selectAll();
+        $secondCategorys = $this->model('SecondCategory');
+        $itemlist = array();
+        $items = array();
+        foreach ($categorys as $category) {
+            array_push($items, $category);
+            foreach ($secondCategorys->selectcategoryId($category['id']) as $secondCategory) {
+                array_push($items, $secondCategory);
+            }
+            array_push($itemlist, $items);
+            $items = array();
+        }
+        $smarty->assign('itemlist', $itemlist);
+        return $smarty->display('Backend/secondCategorys.html');
+    }
+
     //新增類別細項
     public function secondCategoryCreate()
     {
@@ -105,7 +159,7 @@ class BackendController extends Controller
     {
         $secondCategorys = $this->model('SecondCategory');
         //json編碼
-        echo json_encode($secondCategorys->selectcategoryId($_POST['categoryId']),JSON_UNESCAPED_UNICODE); 
+        echo json_encode($secondCategorys->selectcategoryId($_POST['categoryId']), JSON_UNESCAPED_UNICODE);
     }
 
     //修改類別細項
@@ -118,6 +172,15 @@ class BackendController extends Controller
     public function secondCategoryDelete()
     {
 
+    }
+
+    //商品
+    public function products()
+    {
+        $smarty = $this->smarty();
+        $product = $this->model('Product');
+        $smarty->assign('products', $product->selectAll());
+        return $smarty->display('Backend/products.html');
     }
 
     //新增商品

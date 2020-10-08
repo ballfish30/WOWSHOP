@@ -1,5 +1,6 @@
 這是新增角色與該有的權限<br>
 {{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
 <form method="post" action="/WOWShop/backend/roleCreate">
   角色名：<input type='text' name='name' required="required"><br>
   角色描述：<input type='text' name='desc' required="required"><br>
@@ -8,4 +9,5 @@
   {{/foreach}}
   <input type="submit" value="建立">
 </form>
+</div>
 {{include file='views/backend/footer.html'}}

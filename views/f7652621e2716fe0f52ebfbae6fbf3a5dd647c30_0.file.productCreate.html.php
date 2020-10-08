@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-06 07:26:42
+/* Smarty version 3.1.34-dev-7, created on 2020-10-08 03:23:19
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/productCreate.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7c1c32736875_83539527',
+  'unifunc' => 'content_5f7e862700ed23_11669002',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f7652621e2716fe0f52ebfbae6fbf3a5dd647c30' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/productCreate.html',
-      1 => 1601969199,
+      1 => 1602127395,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/footer.html' => 1,
   ),
 ),false)) {
-function content_5f7c1c32736875_83539527 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f7e862700ed23_11669002 (Smarty_Internal_Template $_smarty_tpl) {
 ?>這是新增商品<br>
 <?php $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 echo '<script'; ?>
@@ -36,6 +36,7 @@ echo '<script'; ?>
     display: block;
   }
 </style>
+<div style="padding-top:7em;" align="center">
 <form method="post" action="/WOWShop/backend/productCreate" enctype="multipart/form-data">
   名稱：<input type='text' name='name' required="required"><br>
   <!-- <?php
@@ -86,6 +87,7 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
   </div><br>
   <input type="submit" value="建立">
 </form>
+</div>
 <?php echo '<script'; ?>
 >
   $('#fileToUpload').change(function () {

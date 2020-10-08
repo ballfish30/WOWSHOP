@@ -1,0 +1,17 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <a href="/WOWSHOP/backend/categoryCreate" class="create">新增</a>
+  <table text-align="center" text-valign="middle">
+      <tr>
+        <th>圖示</th><th>類別名稱</th><th>刪除</th>
+      </tr>
+      {{foreach from=$categorys item=category name=foo}}
+      <tr>
+        <td><img height="50px" width="50px" src="data:image/jpg;base64,{{$category.icon}}"/></td>
+        <td><a href="#" class="update"><pre>{{$category.name}}</pre></a></td>
+        <td><a href="#" class="cancel">刪除</a></td>
+      </tr>
+      {{/foreach}}
+  </table>
+</div>
+{{include file='views/backend/footer.html'}}
