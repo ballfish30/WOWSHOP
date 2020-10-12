@@ -20,7 +20,16 @@ class StoreController extends Controller
         $data['productId'] = $productId;
         $data['quantity'] = $quantity;
         $data['total'] = $quantity * $product['price'];
-        $cart->add($data);
+        $cartOld = $cart->selectCart($_COOKIE['orderId'], $productId); 
+        if ($cartOld){
+            $data['quantity'] += $cartOld['quantity'];
+            $data['total'] = $data['quantity'] * $product['price'];
+            $cart->update($cartOld['id'], $data);
+        }
+        else
+        {
+            $cart->add($data);
+        }
         $json = array("status"=>"1", "message"=>"加入成功");
         echo json_encode($json);
     }
