@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-08 06:17:01
+/* Smarty version 3.1.34-dev-7, created on 2020-10-12 02:02:05
   from '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7eaedde501a7_34646039',
+  'unifunc' => 'content_5f83b91dedf784_54681083',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6b3f0ff28eb9b789a6233569e02cbf5419ee5716' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html',
-      1 => 1602137817,
+      1 => 1602468121,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5f7eaedde501a7_34646039 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f83b91dedf784_54681083 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!doctype html>
 <!--
 	Itsy by FreeHTML5.co
@@ -68,9 +68,9 @@ function content_5f7eaedde501a7_34646039 (Smarty_Internal_Template $_smarty_tpl)
                         <li class="menu-item">
                             <a href="/WOWShop/store/">首頁</a></li>
                         <li class="menu-item">
-                            <a href="/WOWShop/user/store/carts">購物車</a></li>
+                            <a href="/WOWShop/store/carts">購物車</a></li>
                         <li class="menu-item">
-                            <a href="/WOWShop/user/store/orders">訂單</a></li>
+                            <a href="/WOWShop/store/orders">訂單</a></li>
                         <li class="menu-item">
                             <a href="/WOWShop/user/register">註冊</a></li>
                         <li class='menu-item'>

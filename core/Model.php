@@ -25,7 +25,7 @@ class Model
         return $sth->fetchAll();
     }
 
-    // 根據條件 (id) 查詢
+    // 根據條件 (orderId, productId) 查詢
     public function selectCart($orderId, $productId)
     {
         $sql = sprintf("select * from `%s` where `orderId` = '%s' and `productId` = '%s'", $this->_table, $orderId, $productId);
@@ -47,6 +47,16 @@ class Model
     public function selectRoleId($id)
     {
         $sql = sprintf("select * from `%s` where `roleId` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    // 根據條件 (orderId) 查詢
+    public function selectCarts($id)
+    {
+        // select *, c.id cartId from cart as c inner join product as p on c.productId = p.id and c.orderId = $_SESSION[orderId];
+        $sql = sprintf("select *, c.id cartId from %s as c inner join product as p on c.productId = p.id and c.orderId = '%s'", $this->_table, $id);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetchAll();

@@ -111,7 +111,6 @@
       url:"/WOWShop/store/cartAdd?productId="+$productId + "&quantity=" + $quantity
     })
     .done(function (data) {
-      console.log(data);
       $data = JSON.parse(data);
       alert($data['message']);
     })
