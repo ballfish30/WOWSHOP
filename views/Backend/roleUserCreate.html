@@ -1,0 +1,18 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <form method="post" action="/WOWSHOP/backend/roleUserCreate"> 
+    職位：
+    <select name=role>
+      {{foreach from=$roles item=role name=foo}}
+        <option value='{{$role.name}}'>{{$role.name}}</option>
+      {{/foreach}}
+    </select><br><br>
+    帳號：<input type="text" id="login" name="accountName" placeholder="accountName" required="required"><br><br>
+    密碼：<input type="text" id="password" name="passwd" placeholder="password" required="required"><br><br>
+    暱稱：<input type="text" name="userName" placeholder="userName" required="required" value="{{$userName}}"><br><br>
+    信箱：<input type="text" name="email" placeholder="email" required="required" value="{{$email}}"><br><br>
+    電話：<input type="text" name="phone" placeholder="phone" required="required" value="{{$phone}}"><br><br>
+    <input type="submit" class="" value="新增">
+  </form>
+</div>
+{{include file='views/backend/footer.html'}}

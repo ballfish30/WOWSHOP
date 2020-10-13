@@ -8,15 +8,25 @@ class BackendController extends Controller
         return $smarty->display('Backend/index.html');
     }
 
+    //members
+    public function members()
+    {
+        $smarty = $this->smarty();
+        $members = $this->model('User');
+        $smarty->assign('members', $members->selectAll());
+        return $smarty->display('Backend/members.html');
+    }
+
     //角色
     public function roles()
     {
         $smarty = $this->smarty();
-        $roles = $this->model('Role')->selectAll();
+        $role = $this->model('Role');
         $permissionRole = $this->model('PermissionRole');
         $permission = $this->model('Permissions');
+        $roleUser = $this->model('RoleUser');
         $itemlist = array();
-        foreach ($roles as $role) {
+        foreach ($role->selectAll() as $role) {
             $items = array();
             array_push($items, $role);
             $item = array();
@@ -29,7 +39,11 @@ class BackendController extends Controller
             array_push($itemlist, $items);
             $items = array();
         }
+        $role = $this->model('Role');
         $smarty->assign('itemlist', $itemlist);
+        $smarty->assign('roleUsers', $roleUser->selectroleUser());
+        $smarty->assign('roles', $role->selectAll());   
+        var_dump($roleUser->selectroleUser());     
         return $smarty->display('Backend/roles.html');
     }
 
@@ -55,7 +69,7 @@ class BackendController extends Controller
             $data['roleId'] = $roleId;
             $permissionRole->add($data);
         }
-        return $smarty->display('Backend/index.html');
+        return $this->index();
     }
 
     //修改角色並調整權限
@@ -65,13 +79,63 @@ class BackendController extends Controller
         $role = $this->model('Role');
         $permissions = $this->model('Permissions');
         $permissionRole = $this->model('PermissionRole');
+        $perIds = array();
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            foreach ($permissionRole->selectRoleId($roleId) as $per) {
+                array_push($perIds, $per['perId']);
+            }
+            $smarty->assign('perIds', $perIds);
             $smarty->assign('role', $role->select($roleId));
             $smarty->assign('permissions', $permissions->selectAll());
             $smarty->assign('permissionRole', $permissionRole->selectRoleId($roleId));
             return $smarty->display('Backend/roleUpdate.html');
         }
         //POST
+        $permissionIds = $_POST['permissions'];
+        $data['name'] = $_POST['name'];
+        $data['desc'] = $_POST['desc'];
+        //roleUpdate
+        $role->update($roleId, $data);
+        //permissionRole create&delete
+        foreach ($permissions->selectAll() as $permission) {
+            $data = array();
+            if (in_array($permission['id'], array_column($permissionRole->selectRoleId($roleId), 'perId')) and !in_array($permission['id'], $permissionIds)) {
+                $permissionRole->permissionRoleDelete($permission['id'], $roleId);
+            } elseif (!in_array($permission['id'], array_column($permissionRole->selectRoleId($roleId), 'perId')) and in_array($permission['id'], $permissionIds)) {
+                $data['perId'] = $permission['id'];
+                $data['roleId'] = $roleId;
+                $permissionRole->add($data);
+            }
+        }
+        return $this->roles();
+    }
+
+    //roleUserCreate
+    public function roleUserCreate()
+    {
+        $smarty = $this->smarty();
+        $role = $this->model('Role');
+        $user = $this->model('User');
+        $roleUser = $this->model('RoleUser');
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $smarty->assign('roles', $role->selectAll());
+            return $smarty->display('Backend/roleUserCreate.html');
+        }
+        //POST
+        //add admin user
+        $data['accountName'] = $_POST['accountName'];
+        $data['userName'] = $_POST['userName'];
+        $data['passwd'] = password_hash($_POST['passwd'], PASSWORD_DEFAULT);
+        $data['phone'] = $_POST['phone'];
+        $data['email'] = $_POST['email'];
+        $user->add($data);
+        $data = [];
+        //add roleUser
+        $data['userId'] = $user->selectAccountName($_POST['accountName'])['id'];
+        $data['roleId'] = $role->selectName($_POST['role'])['id'];
+        $roleUser->add($data);
+        $data = [];
+        return $this->roles();
     }
 
     //調整角色
@@ -103,7 +167,7 @@ class BackendController extends Controller
         $data['name'] = $_POST['name'];
         $data['icon'] = $image;
         $category->add($data);
-        return $smarty->display('Backend/index.html');
+        return $this->categorys();
     }
 
     //修改類別
@@ -151,7 +215,7 @@ class BackendController extends Controller
         $data['name'] = $_POST['name'];
         $data['categoryId'] = $_POST['category'];
         $secondCategory->add($data);
-        return $smarty->display('Backend/index.html');
+        return $this->secondCategory();
     }
 
     //回傳類別細項
@@ -204,7 +268,24 @@ class BackendController extends Controller
         $data['itemLevel'] = $_POST['itemLevel'];
         $data['secondCategoryId'] = $_POST['secondCategory'];
         $product->add($data);
-        return $smarty->display('Backend/index.html');
+        return $this->products;
+    }
+
+    //orders
+    public function orders()
+    {
+        $smarty = $this->smarty();
+        $order = $this->model('Order');
+        $smarty->assign('orders', $order->selectOrderFalse());
+        return $smarty->display('Backend/orders.html');
+    }
+
+    //order
+    public function order($id)
+    {
+        $smarty = $this->smarty();
+        $smarty->assign('carts', $this->model('Cart')->selectCarts($id));
+        return $smarty->display('Backend/order.html');
     }
 
 }

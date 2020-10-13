@@ -1,0 +1,18 @@
+{{include file='views/store/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <table>
+    <tr>
+      <th>編號</th><th>日期</th><th>訂單狀態</th><th>付款狀態</th><th>付款方式</th><th>總額</th>
+    </tr>
+    {{foreach from=$orders item=order name=foo}}
+    <tr>
+      <td><a href="/store/order?orderId={{$order.id}}">{{$order.id}}</a></td>
+      <td>{{$order.paymentDateTime}}</td>
+      <td>{{$order.orderStatus}}</td>
+      <td>{{$order.paymentStatus}}</td>
+      <td>{{$order.paymentType}}</td>
+      <td>{{$order.subTotal}}</td>
+    </tr>
+    {{/foreach}}
+  </table>
+</div>

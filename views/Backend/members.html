@@ -1,0 +1,28 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <table>
+    <tr>
+      <th>編號</th><th>會員名稱</th><th>會員級別</th><th>啟用／停用</th>
+    </tr>
+    {{foreach from=$members item=member name=foo}}
+      <tr>
+        <td>{{$member.id}}</td>
+        <td>{{$member.userName}}</td>
+        <td>{{$member.email}}</td>
+        <td><input type="checkbox" name="isActive" value='{{$member.id}}'{{if $member.isActive}}checked{{/if}}></td>
+      </tr>   
+    {{/foreach}}
+  </table>
+</div>
+<script>
+  $(document).on('change', 'input[name=isActive]', function () {
+    var $this = $(this);
+    $.ajax({
+          type:"GET",
+          url:"/WOWShop/backend/memberisActive?userId="+$this.val()
+        })
+        .done(function (data) {
+          alert(data);
+        })
+  });
+</script>

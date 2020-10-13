@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-12 08:27:18
-  from '/Applications/MAMP/htdocs/WOWSHOP/views/store/carts.html' */
+/* Smarty version 3.1.34-dev-7, created on 2020-10-12 07:03:31
+  from '/Applications/MAMP/htdocs/WOWSHOP/views/store/orderCheck.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f841366bf85a2_52042749',
+  'unifunc' => 'content_5f83ffc3cdcc75_82186568',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'bf933a53d247d4e46dfc3f55f06f78398807dce5' => 
+    'c12c66e79fee8fe483c6e2d174074f40ceedf2a1' => 
     array (
-      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/carts.html',
-      1 => 1602491236,
+      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/orderCheck.html',
+      1 => 1602486207,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/store/head.html' => 1,
   ),
 ),false)) {
-function content_5f841366bf85a2_52042749 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f83ffc3cdcc75_82186568 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">
@@ -43,10 +43,8 @@ $_smarty_tpl->tpl_vars['cart']->do_else = false;
 </pre></td>
         <td style="vertical-align: middle;text-align: center; width:20em;"><pre><?php echo $_smarty_tpl->tpl_vars['cart']->value['introduction'];?>
 </pre></td>
-        <td style="vertical-align: middle;text-align: center;"><input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['cart']->value['cartId'];?>
-"><input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['cart']->value['id'];?>
-"><input type="number" name=quantity value="<?php echo $_smarty_tpl->tpl_vars['cart']->value['quantity'];?>
-"></td>
+        <td style="vertical-align: middle;text-align: center;"><?php echo $_smarty_tpl->tpl_vars['cart']->value['quantity'];?>
+</td>
         <td style="vertical-align: middle;text-align: center;"><?php echo $_smarty_tpl->tpl_vars['cart']->value['price'];?>
 </td>
         <td class="cartTotal" style="vertical-align: middle;text-align: center;"><?php echo $_smarty_tpl->tpl_vars['cart']->value['total'];?>
@@ -58,50 +56,33 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
     <tr>
       <td colspan="6" style="text-align:right;" class="total"></td>
     </tr>
-  </table>
-  <a href="/WOWShop/store/ordercheck" class="create">結帳</a>
+  </table><br><br><br>
+  <form id="form1" name="form1" method="post" action="/WOWShop/store/pay">
+    <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+      <tr>
+        <td width="100" align="center" valign="baseline">收件人姓名：</td>
+        <td valign="baseline"><input type="text" name="name" id="name" required="required"/></td>
+      </tr>
+      <tr>
+        <td width="80" align="center" valign="baseline">收件人信箱：</td>
+        <td valign="baseline"><input type="email" name="email" id="email" required="required"/></td>
+      </tr>
+      <tr>
+        <td width="80" align="center" valign="baseline">收件人地址：</td>
+        <td valign="baseline"><input type="text"" name="address" id="address" required="required"/></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center" bgcolor="#CCCCCC"><input type="submit" name="btnOK" id="btnOK" value="確認訂單" />
+        </td>
+      </tr>
+    </table>
+  </form>
+  <p>測試卡號：4311-9522-2222-2222 </p>
+  <p>安全密碼：２２２</p>
+  <p>有效日期：今日之後即可</p>
 </div>
 <?php echo '<script'; ?>
 >
-  $("input[name=quantity]").on("change", function() {
-    $this = $(this);
-    $quantity = $this.val();
-    $productId = $this.prev().val();
-    $cartId = $this.prev().prev().val();
-    if ($quantity<=0){
-      $.ajax({
-      type:"GET",
-      url:"/WOWShop/store/cartDelete?cartId=" + $cartId
-      })
-      .done(function (data) {
-        $data = JSON.parse(data);
-        alert($data['message']);
-        $this.parent().parent().remove()
-        var sum = 0;
-        $('.cartTotal').each(function(){
-          $this = $(this);
-          sum += parseFloat($this.html());
-        });
-        $('.total').html("總計：" + sum);
-      })
-    }else{
-      $.ajax({
-      type:"GET",
-      url:"/WOWShop/store/cartUpdate?productId="+$productId + "&quantity=" + $quantity + "&cartId=" + $cartId
-      })
-      .done(function (data) {
-        $data = JSON.parse(data);
-        alert($data['message']);
-        $this.parent().next().next().html($data['total']);
-        var sum = 0;
-        $('.cartTotal').each(function(){
-          $this = $(this);
-          sum += parseFloat($this.html());
-        });
-        $('.total').html("總計：" + sum);
-      })
-    }
-  });
   var sum = 0;
   $('.cartTotal').each(function(){
     $this = $(this);

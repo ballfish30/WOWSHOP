@@ -11,13 +11,14 @@ class Controller
 
     public function __construct()
     {
-        if (isset($_COOKIE['userId']) and !isset($_COOKIE['orderId'])) {
+        if (isset($_COOKIE['userId']) and empty($this->model('Order')->selectOrder($_COOKIE['userId']))) {
             $order = $this->model('Order');
             $userId = $_COOKIE['userId'];
             if (empty($order->selectOrder($userId)) === true) {
                 $data['userId'] = $userId;
                 $data['orderStatus'] = '未處理';
                 $data['paymentStatus'] = '未付款';
+                $data['paymentType'] = '信用卡';
                 $order->add($data);
                 $this->setCookie('orderId', $order->selectOrder($userId)['0']['id']);
             } else {
@@ -37,7 +38,7 @@ class Controller
 
     public function smarty()
     {
-        require 'class/Smarty.class.php';
+        require_once 'class/Smarty.class.php';
         $smarty = new Smarty;
         $smarty->template_dir = 'views';
         $smarty->compile_dir = 'views/';

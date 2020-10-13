@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-12 02:02:05
+/* Smarty version 3.1.34-dev-7, created on 2020-10-12 09:16:56
   from '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f83b91dedf784_54681083',
+  'unifunc' => 'content_5f841f08dc0ce3_01239081',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6b3f0ff28eb9b789a6233569e02cbf5419ee5716' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html',
-      1 => 1602468121,
+      1 => 1602494167,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5f83b91dedf784_54681083 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f841f08dc0ce3_01239081 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!doctype html>
 <!--
 	Itsy by FreeHTML5.co

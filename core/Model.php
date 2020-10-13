@@ -25,6 +25,14 @@ class Model
         return $sth->fetchAll();
     }
 
+    //查詢未完成訂單
+    public function selectOrderFalse(){
+        $sql = sprintf("select *, o.id from orders as o inner join user as u on o.userId = u.id where o.done = false", $this->_table);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
     // 根據條件 (orderId, productId) 查詢
     public function selectCart($orderId, $productId)
     {
@@ -71,6 +79,15 @@ class Model
         return $sth->fetchAll();
     }
 
+    // 根據條件 (userId, done=true) 查詢
+    public function selectOrderDone($id)
+    {
+        $sql = sprintf("select * from `%s` where `userId` = '%s' and `done` = '1'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
     // 根據條件 (perId) 查詢
     public function selectPerId($id)
     {
@@ -84,6 +101,15 @@ class Model
     public function selectcategoryId($id)
     {
         $sql = sprintf("select * from `%s` where `categoryId` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
+    // roleUser 查詢
+    public function selectroleUser()
+    {
+        $sql = sprintf("select * from User as u join RoleUser as r on u.id = r.userId");
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetchAll();
@@ -111,6 +137,15 @@ class Model
     public function delete($id)
     {
         $sql = sprintf("delete from `%s` where `id` = '%s'", $this->_table, $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->rowCount();
+    }
+
+    // 根據條件 (perId, roleId) 刪除
+    public function permissionRoleDelete($perId, $roleId)
+    {
+        $sql = sprintf("delete from `%s` where `perId` = '%s' and `roleId` = '%s'", $this->_table, $perId, $roleId);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->rowCount();

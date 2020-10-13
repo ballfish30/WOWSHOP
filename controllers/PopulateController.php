@@ -41,7 +41,9 @@ class PopulateController extends Controller
             ['檢視訂單', '檢視訂單'],
             ['修改訂單', '修改訂單'],
             ['刪除訂單', '刪除訂單'],
+            ['後台權限', '後台權限']
         ];
+        //create permission
         foreach ($datas as $i) {
             $data['name'] = $i[0];
             $data['desc'] = $i[1];
@@ -65,12 +67,4 @@ class PopulateController extends Controller
             $permissionRole->add($data);
         }
     }
-
-    // public function test()
-    // {
-    //     $user = $this->model('User');
-    //     $role = $this->model('Role');
-    //     echo $user->selectAccountName('admin')['id'];
-    //     echo $role->selectName('超級管理員')['id'];
-    // }
 }

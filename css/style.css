@@ -699,8 +699,8 @@ kbd {
   color: #737171;
 }
 
-input[type="url"], input[type="email"],
-input[type="tel"], input[type="password"], textarea {
+input[type="url"], input[type="tel"],
+input[type="password"], textarea {
   background-color: rgba(0, 0, 0, 0.05);
   border: none;
   border-radius: 0;
@@ -2256,6 +2256,7 @@ header.header nav ul > li.current-page-ancestor > a,
 .single-post .content a, header.header nav a:hover,
 .widget a:hover, .side a:hover, .main-archive h2 a:hover, .related h6 a:hover, .home-sticky-post h3 a:hover {
   color: #f08c79;
+  text-decoration:none;
 }
 
 body, blockquote {

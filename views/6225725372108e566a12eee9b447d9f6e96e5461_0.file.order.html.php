@@ -1,28 +1,28 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-12 08:27:18
-  from '/Applications/MAMP/htdocs/WOWSHOP/views/store/carts.html' */
+/* Smarty version 3.1.34-dev-7, created on 2020-10-13 07:23:45
+  from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/order.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f841366bf85a2_52042749',
+  'unifunc' => 'content_5f8556011be287_23570150',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
-    'bf933a53d247d4e46dfc3f55f06f78398807dce5' => 
+    '6225725372108e566a12eee9b447d9f6e96e5461' => 
     array (
-      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/carts.html',
-      1 => 1602491236,
+      0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/order.html',
+      1 => 1602573821,
       2 => 'file',
     ),
   ),
   'includes' => 
   array (
-    'file:views/store/head.html' => 1,
+    'file:views/backend/head.html' => 1,
   ),
 ),false)) {
-function content_5f841366bf85a2_52042749 (Smarty_Internal_Template $_smarty_tpl) {
-$_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+function content_5f8556011be287_23570150 (Smarty_Internal_Template $_smarty_tpl) {
+$_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">
   <table>
@@ -43,10 +43,8 @@ $_smarty_tpl->tpl_vars['cart']->do_else = false;
 </pre></td>
         <td style="vertical-align: middle;text-align: center; width:20em;"><pre><?php echo $_smarty_tpl->tpl_vars['cart']->value['introduction'];?>
 </pre></td>
-        <td style="vertical-align: middle;text-align: center;"><input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['cart']->value['cartId'];?>
-"><input type="hidden" value="<?php echo $_smarty_tpl->tpl_vars['cart']->value['id'];?>
-"><input type="number" name=quantity value="<?php echo $_smarty_tpl->tpl_vars['cart']->value['quantity'];?>
-"></td>
+        <td style="vertical-align: middle;text-align: center;"><?php echo $_smarty_tpl->tpl_vars['cart']->value['quantity'];?>
+</td>
         <td style="vertical-align: middle;text-align: center;"><?php echo $_smarty_tpl->tpl_vars['cart']->value['price'];?>
 </td>
         <td class="cartTotal" style="vertical-align: middle;text-align: center;"><?php echo $_smarty_tpl->tpl_vars['cart']->value['total'];?>
@@ -59,7 +57,6 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
       <td colspan="6" style="text-align:right;" class="total"></td>
     </tr>
   </table>
-  <a href="/WOWShop/store/ordercheck" class="create">結帳</a>
 </div>
 <?php echo '<script'; ?>
 >

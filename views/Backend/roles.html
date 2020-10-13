@@ -1,15 +1,15 @@
 {{include file='views/backend/head.html'}}
 <div style="padding-top:7em;" align="center">
-  <a href="/WOWSHOP/backend/roleCreate" class="create">新增</a>
+  <a href="/WOWSHOP/backend/roleCreate" class="create">新增職位</a>
   <table text-align="center" text-valign="middle">
     <tr>
-      <th>角色</th><th>權限</th>
+      <th>職位</th><th>權限</th>
     </tr>
     {{foreach from=$itemlist item=items name=foo}}
     <tr>
       {{foreach from=$items item=item name=foo}}
         {{if $smarty.foreach.foo.first}}
-          <td>{{$item.name}}</td>
+          <td><a href="/WOWSHOP/backend/roleUpdate/{{$item.id}}">{{$item.name}}</a></td>
         {{else}}
           <td>
             {{foreach from=$item item=per name=foo}}
@@ -24,6 +24,15 @@
       {{/foreach}}
     </tr>
     {{/foreach}}
+  </table><br>
+  <a href="/WOWSHOP/backend/roleuserCreate" class="create">新增使用者</a>
+  <table text-align="center" text-valign="middle">
+    <tr>
+      <th>暱稱</th><th>職位</th>
+    </tr>
   </table>
+  {{foreach from=$roleUsers item=roleUser name=foo}}
+      {{$roleUser.id}}
+    {{/foreach}}
 </div>
 {{include file='views/backend/footer.html'}}

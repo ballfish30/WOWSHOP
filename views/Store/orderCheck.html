@@ -1,0 +1,52 @@
+{{include file='views/store/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <table>
+    <tr>
+      <th>商品圖</th><th>商品名稱</th><th>商品描述</th><th>數量</th><th>價格</th><th>小計</th>
+    </tr>
+    {{foreach from=$carts item=cart name=foo}}
+      <tr>
+        <td><img style="width:200px" src="data:image/jpg;base64,{{$cart.img}}"></td>
+        <td style="vertical-align: middle;text-align: center;"><pre>{{$cart.name}}</pre></td>
+        <td style="vertical-align: middle;text-align: center; width:20em;"><pre>{{$cart.introduction}}</pre></td>
+        <td style="vertical-align: middle;text-align: center;">{{$cart.quantity}}</td>
+        <td style="vertical-align: middle;text-align: center;">{{$cart.price}}</td>
+        <td class="cartTotal" style="vertical-align: middle;text-align: center;">{{$cart.total}}</td>
+      </tr>
+    {{/foreach}}
+    <tr>
+      <td colspan="6" style="text-align:right;" class="total"></td>
+    </tr>
+  </table><br><br><br>
+  <form id="form1" name="form1" method="post" action="/WOWShop/store/pay">
+    <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
+      <tr>
+        <td width="100" align="center" valign="baseline">收件人姓名：</td>
+        <td valign="baseline"><input type="text" name="name" id="name" required="required"/></td>
+      </tr>
+      <tr>
+        <td width="80" align="center" valign="baseline">收件人信箱：</td>
+        <td valign="baseline"><input type="email" name="email" id="email" required="required"/></td>
+      </tr>
+      <tr>
+        <td width="80" align="center" valign="baseline">收件人地址：</td>
+        <td valign="baseline"><input type="text"" name="address" id="address" required="required"/></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="center" bgcolor="#CCCCCC"><input type="submit" name="btnOK" id="btnOK" value="確認訂單" />
+        </td>
+      </tr>
+    </table>
+  </form>
+  <p>測試卡號：4311-9522-2222-2222 </p>
+  <p>安全密碼：２２２</p>
+  <p>有效日期：今日之後即可</p>
+</div>
+<script>
+  var sum = 0;
+  $('.cartTotal').each(function(){
+    $this = $(this);
+    sum += parseFloat($this.html());
+  });
+  $('.total').html("總計：" + sum);
+</script>

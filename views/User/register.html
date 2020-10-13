@@ -19,10 +19,6 @@
 
     <!-- Login Form -->
     <form method="post" action="/WOWSHOP/user/register"> 
-      <input type="radio" id="manager" name="role">
-      <label for="manager">管理者</label>
-      <input type="radio" id="customer" name="role" checked>
-      <label for="customer">顧客</label>
       <input type="text" id="login" class="fadeIn second" name="accountName" placeholder="accountName" required="required">
       <input type="password" id="password" class="fadeIn third" name="passwd" placeholder="password" required="required">
       <input type="text" name="userName" class="fadeIn fourth" placeholder="userName" required="required" value="{{$userName}}">

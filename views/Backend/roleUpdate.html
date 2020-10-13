@@ -1,16 +1,16 @@
-這是修改角色與該有的權限<br>
 {{include file='views/backend/head.html'}}
-<form method="post" action="/WOWShop/backend/roleCreate">
-  角色名：<input type='text' name='name' value="{{$role.name}}" required="required"><br>
-  角色描述：<input type='text' name='desc' value="{{$role.desc}}" required="required"><br>
-  {{foreach from=$permissions item=permission name=foo}}
-  {{$permissionRole}}
-  {{$permission.id}}
-  {{if in_array($permission.id, $permissionRole)}}
-  <input type="checkbox" value="{{$permission.id}}" name="permissions[]">{{$permission.name}}<br>
-  {{/if}}
-  
-  {{/foreach}}
-  <input type="submit" value="建立">
-</form>
+<div style="padding-top:7em;" align="center">
+  <form method="post" action="/WOWShop/backend/roleUpdate/{{$role.id}}">
+    角色名：<input type='text' name='name' value="{{$role.name}}" required="required"><br>
+    角色描述：<input type='text' name='desc' value="{{$role.desc}}" required="required"><br>
+    {{foreach from=$permissions item=permission name=foo}}
+    {{if in_array($permission.id, $perIds)}}
+      <input type="checkbox" value="{{$permission.id}}" name="permissions[]" checked>{{$permission.name}}<br>
+    {{else}}
+      <input type="checkbox" value="{{$permission.id}}" name="permissions[]" >{{$permission.name}}<br>
+    {{/if}}
+    {{/foreach}}
+    <input type="submit" value="建立">
+  </form>
+</div>
 {{include file='views/backend/footer.html'}}

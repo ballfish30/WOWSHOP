@@ -1,0 +1,20 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <table>
+    <tr>
+      <th>訂單編號</th><th>會員名稱</th><th>訂單狀態</th><th>付款狀態</th><th>付款日期</th><th>總額</th>
+    </tr>
+    {{foreach from=$orders item=order name=foo}}
+      <tr>
+        <td>
+          <a href="/WOWShop/backend/order/{{$order.id}}">{{$order.id}}</a>
+        </td>
+        <td>{{$order.userName}}</td>
+        <td>{{$order.orderStatus}}</td>
+        <td>{{$order.paymentStatus}}</td>
+        <td>{{$order.paymentDateTime}}</td>
+        <td>{{$order.subTotal}}</td>
+      </tr>   
+    {{/foreach}}
+  </table>
+</div>
