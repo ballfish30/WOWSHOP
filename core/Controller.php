@@ -11,6 +11,8 @@ class Controller
 
     public function __construct()
     {
+        if (!isset($_COOKIE['userId'])){
+        }
         if (isset($_COOKIE['userId']) and empty($this->model('Order')->selectOrder($_COOKIE['userId']))) {
             $order = $this->model('Order');
             $userId = $_COOKIE['userId'];

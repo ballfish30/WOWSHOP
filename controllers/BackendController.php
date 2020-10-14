@@ -299,7 +299,7 @@ class BackendController extends Controller
         $data['itemLevel'] = $_POST['itemLevel'];
         $data['secondCategoryId'] = $_POST['secondCategory'];
         $product->add($data);
-        return $this->products;
+        return $this->products();
     }
 
     //productUpdate
@@ -308,8 +308,11 @@ class BackendController extends Controller
     }
     
     //productDelete
-    public function productDelete(){
-        
+    public function productDelete($id){
+        $product = $this->model('Product');
+        $product->delete($id);
+        $json = array("status" => "1", "message" => "已刪除");
+        echo json_encode($json);
     }
 
     //orders

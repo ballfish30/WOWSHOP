@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-07 06:32:26
+/* Smarty version 3.1.34-dev-7, created on 2020-10-14 08:04:51
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/products.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7d60faccfd88_58397322',
+  'unifunc' => 'content_5f86b1235432f8_84072220',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '170a2743ef4fd6f0748e3029003fcecf48f7fa03' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/products.html',
-      1 => 1602052344,
+      1 => 1602662584,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/footer.html' => 1,
   ),
 ),false)) {
-function content_5f7d60faccfd88_58397322 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f86b1235432f8_84072220 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">
@@ -60,13 +60,35 @@ $_smarty_tpl->tpl_vars['product']->do_else = false;
 </td>
         <td><?php echo $_smarty_tpl->tpl_vars['product']->value['introduction'];?>
 </td>
-        <td><a href="#" class="cancel">刪除</a></td>
+        <td><button class="cancel" value="<?php echo $_smarty_tpl->tpl_vars['product']->value['id'];?>
+" type="button">刪除</button></td>
       </tr>
     <?php
 }
 $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
   </table>
 </div>
+<?php echo '<script'; ?>
+>
+  $(document).on('click', '.cancel', function () {
+    var $this = $(this);
+    if (!confirm("是否刪除")){
+      return false;
+    }else{
+      $.ajax({
+          type:"GET",
+          url:"/WOWShop/backend/productDelete/"+$this.val()
+        })
+        .done(function (data) {
+          $data = JSON.parse(data);
+          alert($data['message']);
+          $this.parent().parent().remove();
+        })
+    }
+    
+  });
+<?php echo '</script'; ?>
+>
 <?php $_smarty_tpl->_subTemplateRender('file:views/backend/footer.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 }
 }

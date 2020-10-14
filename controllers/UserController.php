@@ -39,8 +39,6 @@ class UserController extends Controller
     // 登出
     public function logout()
     {
-        // 清除session
-        session_destroy();
         //smarty
         $smarty = $this->smarty();
         $this->delCookie('username');
@@ -54,9 +52,6 @@ class UserController extends Controller
     {
         //smarty
         $smarty = $this->smarty();
-        if (!isset($_SESSION)) {
-            session_start();
-        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             return $smarty->display('user/register.html');
         }

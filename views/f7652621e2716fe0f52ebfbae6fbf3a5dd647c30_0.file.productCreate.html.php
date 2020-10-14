@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-08 03:23:19
+/* Smarty version 3.1.34-dev-7, created on 2020-10-14 08:07:33
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/productCreate.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7e862700ed23_11669002',
+  'unifunc' => 'content_5f86b1c5987de5_61778008',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f7652621e2716fe0f52ebfbae6fbf3a5dd647c30' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/productCreate.html',
-      1 => 1602127395,
+      1 => 1602662848,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/footer.html' => 1,
   ),
 ),false)) {
-function content_5f7e862700ed23_11669002 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f86b1c5987de5_61778008 (Smarty_Internal_Template $_smarty_tpl) {
 ?>這是新增商品<br>
 <?php $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 echo '<script'; ?>
@@ -79,8 +79,8 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
         <option>史詩</option>
         <option>神器</option>
       </select><br>
-  價格：<input type='number' name='price' required="required"><br>
-  庫存：<input type='number' name='invetory' required="required"><br>
+  價格：<input type='number' name='price' required="required" min=1 value=1><br>
+  庫存：<input type='number' name='invetory' required="required" min=1 value=1><br>
   圖片：<input type="file" name="fileToUpload" id="fileToUpload">
   <div class="c-zt-pic">
     <img id="preview" width=300px src="">
