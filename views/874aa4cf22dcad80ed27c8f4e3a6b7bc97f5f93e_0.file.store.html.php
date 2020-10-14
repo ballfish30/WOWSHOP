@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-12 07:34:47
+/* Smarty version 3.1.34-dev-7, created on 2020-10-14 10:03:45
   from '/Applications/MAMP/htdocs/WOWSHOP/views/store/store.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f8407171b89d6_37019413',
+  'unifunc' => 'content_5f86cd01bfa988_53015389',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '874aa4cf22dcad80ed27c8f4e3a6b7bc97f5f93e' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/store.html',
-      1 => 1602471248,
+      1 => 1602669822,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/store/head.html' => 1,
   ),
 ),false)) {
-function content_5f8407171b89d6_37019413 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f86cd01bfa988_53015389 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div class="wrap full-wrap">
