@@ -6,7 +6,7 @@
     </tr>
     {{foreach from=$orders item=order name=foo}}
     <tr>
-      <td><a href="/store/order?orderId={{$order.id}}">{{$order.id}}</a></td>
+      <td><a href="/WOWSHOP/store/order/{{$order.id}}">{{$order.id}}</a></td>
       <td>{{$order.paymentDateTime}}</td>
       <td>{{$order.orderStatus}}</td>
       <td>{{$order.paymentStatus}}</td>

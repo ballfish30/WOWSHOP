@@ -1,0 +1,68 @@
+{{include file='views/store/head.html'}}
+<div style="padding-top:7em;" align="center">
+  <table>
+    <tr>
+      <th>商品圖</th><th>商品名稱</th><th>商品描述</th><th>數量</th><th>價格</th><th>小計</th>
+    </tr>
+    {{foreach from=$carts item=cart name=foo}}
+      <tr>
+        <td><img style="width:200px" src="data:image/jpg;base64,{{$cart.img}}"></td>
+        <td style="vertical-align: middle;text-align: center;"><pre>{{$cart.name}}</pre></td>
+        <td style="vertical-align: middle;text-align: center; width:20em;"><pre>{{$cart.introduction}}</pre></td>
+        <td style="vertical-align: middle;text-align: center;">{{$cart.quantity}}</td>
+        <td style="vertical-align: middle;text-align: center;">{{$cart.price}}</td>
+        <td class="cartTotal" style="vertical-align: middle;text-align: center;">{{$cart.total}}</td>
+      </tr>
+    {{/foreach}}
+    <tr>
+      <td colspan="6" style="text-align:right;" class="total"></td>
+    </tr>
+  </table>
+</div>
+<script>
+  $("input[name=quantity]").on("change", function() {
+    $this = $(this);
+    $quantity = $this.val();
+    $productId = $this.prev().val();
+    $cartId = $this.prev().prev().val();
+    if ($quantity<=0){
+      $.ajax({
+      type:"GET",
+      url:"/WOWShop/store/cartDelete?cartId=" + $cartId
+      })
+      .done(function (data) {
+        $data = JSON.parse(data);
+        alert($data['message']);
+        $this.parent().parent().remove()
+        var sum = 0;
+        $('.cartTotal').each(function(){
+          $this = $(this);
+          sum += parseFloat($this.html());
+        });
+        $('.total').html("總計：" + sum);
+      })
+    }else{
+      $.ajax({
+      type:"GET",
+      url:"/WOWShop/store/cartUpdate?productId="+$productId + "&quantity=" + $quantity + "&cartId=" + $cartId
+      })
+      .done(function (data) {
+        $data = JSON.parse(data);
+        alert($data['message']);
+        $this.parent().next().next().html($data['total']);
+        var sum = 0;
+        $('.cartTotal').each(function(){
+          $this = $(this);
+          sum += parseFloat($this.html());
+        });
+        $('.total').html("總計：" + sum);
+      })
+    }
+  });
+  var sum = 0;
+  $('.cartTotal').each(function(){
+    $this = $(this);
+    sum += parseFloat($this.html());
+  });
+  $('.total').html("總計：" + sum);
+</script>

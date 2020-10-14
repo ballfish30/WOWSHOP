@@ -19,10 +19,11 @@
     var $this = $(this);
     $.ajax({
           type:"GET",
-          url:"/WOWShop/backend/memberisActive?userId="+$this.val()
+          url:"/WOWShop/backend/memberisActive/"+$this.val()
         })
         .done(function (data) {
-          alert(data);
+          $data = JSON.parse(data);
+          alert($data['message']);
         })
   });
 </script>

@@ -1,0 +1,11 @@
+{{include file='views/backend/head.html'}}
+<div style="padding-top:7em;" align="center">
+  暱稱：{{$user.userName}}<br><br>
+  職位：
+  <select name='roleId'>
+    {{foreach from=$roles item=role name=foo}}
+      <option value='{{$role.id}}'>{{$role.name}}</option>
+    {{/foreach}}
+  </select>
+</div>
+{{include file='views/backend/footer.html'}}

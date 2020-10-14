@@ -17,6 +17,23 @@ class BackendController extends Controller
         return $smarty->display('Backend/members.html');
     }
 
+    //memberisActive
+    public function memberisActive($memberId)
+    {
+        $user = $this->model('User');
+        $userIsActive = $user->select($memberId)['isActive'];
+        if ($userIsActive){
+            $data['isActive'] = 0;
+            $user->update($memberId, $data);
+            $json = array("status" => "1", "message" => "已停用");
+        }else{
+            $data['isActive'] = 1;
+            $user->update($memberId, $data);
+            $json = array("status" => "1", "message" => "已啟用");
+        }
+        echo json_encode($json);
+    }
+
     //角色
     public function roles()
     {
@@ -42,8 +59,7 @@ class BackendController extends Controller
         $role = $this->model('Role');
         $smarty->assign('itemlist', $itemlist);
         $smarty->assign('roleUsers', $roleUser->selectroleUser());
-        $smarty->assign('roles', $role->selectAll());   
-        var_dump($roleUser->selectroleUser());     
+        $smarty->assign('roles', $role->selectAll());
         return $smarty->display('Backend/roles.html');
     }
 
@@ -139,9 +155,18 @@ class BackendController extends Controller
     }
 
     //調整角色
-    public function rolechange($userRoleId)
+    public function rolechange($Id)
     {
-
+        $smarty = $this->smarty();
+        $role = $this->model('Role');
+        $user = $this->model('User');
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $smarty->assign('permissions', $this->model('Permissions')->selectAll());
+            $smarty->assign('roles', $role->selectAll());
+            $smarty->assign('user', $user->selectroleUserId($Id));
+            return $smarty->display('Backend/rolechange.html');
+        //POST
+        }
     }
 
     //類別列表
@@ -177,9 +202,12 @@ class BackendController extends Controller
     }
 
     //刪除類別
-    public function categoryDelete()
+    public function categoryDelete($id)
     {
-
+        $category = $this->model('Category');
+        $category->delete($id);
+        $json = array("status" => "1", "message" => "已刪除");
+        echo json_encode($json);
     }
 
     //類別細項列表
@@ -233,9 +261,12 @@ class BackendController extends Controller
     }
 
     //刪除類別細項
-    public function secondCategoryDelete()
+    public function secondCategoryDelete($id)
     {
-
+        $secondCategory = $this->model('SecondCategory');
+        $secondCategory->delete($id);
+        $json = array("status" => "1", "message" => "已刪除");
+        echo json_encode($json);
     }
 
     //商品
@@ -269,6 +300,16 @@ class BackendController extends Controller
         $data['secondCategoryId'] = $_POST['secondCategory'];
         $product->add($data);
         return $this->products;
+    }
+
+    //productUpdate
+    public function productUpdate(){
+
+    }
+    
+    //productDelete
+    public function productDelete(){
+        
     }
 
     //orders

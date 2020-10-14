@@ -9,9 +9,28 @@
       <tr>
         <td><img height="50px" width="50px" src="data:image/jpg;base64,{{$category.icon}}"/></td>
         <td><a href="#" class="update"><pre>{{$category.name}}</pre></a></td>
-        <td><a href="#" class="cancel">刪除</a></td>
-      </tr>
+        <td><button class="cancel" value="{{$category.id}}" type="button">刪除</button> </td>
+      </tr>         
       {{/foreach}}
   </table>
 </div>
+<script>
+  $(document).on('click', '.cancel', function () {
+    var $this = $(this);
+    if (!confirm("是否刪除")){
+      return false;
+    }else{
+      $.ajax({
+          type:"GET",
+          url:"/WOWShop/backend/categoryDelete/"+$this.val()
+        })
+        .done(function (data) {
+          $data = JSON.parse(data);
+          alert($data['message']);
+          $this.parent().parent().remove();
+        })
+    }
+    
+  });
+</script>
 {{include file='views/backend/footer.html'}}

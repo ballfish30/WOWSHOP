@@ -30,9 +30,12 @@
     <tr>
       <th>暱稱</th><th>職位</th>
     </tr>
-  </table>
   {{foreach from=$roleUsers item=roleUser name=foo}}
-      {{$roleUser.id}}
+      <tr>
+        <td><a href="/WOWSHOP/backend/rolechange/{{$roleUser.userId}}">{{$roleUser.userName}}</a></td>
+        <td>{{$roleUser.name}}</td>
+      </tr>
     {{/foreach}}
+  </table>
 </div>
 {{include file='views/backend/footer.html'}}

@@ -109,10 +109,19 @@ class Model
     // roleUser 查詢
     public function selectroleUser()
     {
-        $sql = sprintf("select * from User as u join RoleUser as r on u.id = r.userId");
+        $sql = sprintf("select * from User as u join RoleUser as r on u.id = r.userId join Role as ro on ro.id = r.roleId");
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetchAll();
+    }
+
+    // userId 查詢 roleUser
+    public function selectroleUserId($id)
+    {
+        $sql = sprintf("select * from User as u join RoleUser as r on u.id = r.userId join Role as ro on ro.id = r.roleId where u.id = '%s'", $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetch();
     }
 
     // 根據條件 (accountName) 查詢

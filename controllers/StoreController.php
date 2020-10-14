@@ -135,4 +135,12 @@ class StoreController extends Controller
         $smarty->assign('orders', $this->model('Order')->selectOrderDone($_COOKIE['userId']));
         return $smarty->display('store/orders.html');
     }
+
+    //order
+    public function order($id)
+    {
+        $smarty = $this->smarty();
+        $smarty->assign('carts', $this->model('Cart')->selectCarts($id));
+        return $smarty->display('Store/order.html');
+    }
 }
