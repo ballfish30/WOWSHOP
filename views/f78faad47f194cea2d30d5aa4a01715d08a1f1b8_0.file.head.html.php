@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-14 08:21:17
+/* Smarty version 3.1.34-dev-7, created on 2020-10-15 03:30:58
   from '/Applications/MAMP/htdocs/WOWSHOP/views/user/head.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f86b4fdebb545_69043210',
+  'unifunc' => 'content_5f87c27290af04_72902431',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f78faad47f194cea2d30d5aa4a01715d08a1f1b8' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/user/head.html',
-      1 => 1602663675,
+      1 => 1602732656,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5f86b4fdebb545_69043210 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f87c27290af04_72902431 (Smarty_Internal_Template $_smarty_tpl) {
 ?><link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <link rel="stylesheet" href="/blog/css/user.css">
 <?php echo '<script'; ?>
@@ -88,7 +88,11 @@ function content_5f86b4fdebb545_69043210 (Smarty_Internal_Template $_smarty_tpl)
                         <li class="menu-item">
                             <a href="/WOWShop/user/register">註冊</a></li>
                         <li class='menu-item'>
+                            <?php if ($_smarty_tpl->tpl_vars['login']->value) {?>
+                            <a href='/WOWShop/user/logout'>登出</a></li>
+                            <?php } else { ?>
                             <a href='/WOWShop/user/login'>登入</a></li>
+                            <?php }?>
                         <li class="menu-inline menu-item">
                             <a title="Facebook" href="https://www.facebook.com/groups/wowclassicchinese">
                                 <i class="fa fa-facebook"></i><span class="i">Facebook</span>

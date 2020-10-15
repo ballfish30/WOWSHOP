@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-14 10:03:45
+/* Smarty version 3.1.34-dev-7, created on 2020-10-15 08:26:40
   from '/Applications/MAMP/htdocs/WOWSHOP/views/store/store.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f86cd01bfa988_53015389',
+  'unifunc' => 'content_5f8807c0a36007_42881541',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '874aa4cf22dcad80ed27c8f4e3a6b7bc97f5f93e' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/store.html',
-      1 => 1602669822,
+      1 => 1602750398,
       2 => 'file',
     ),
   ),
@@ -21,8 +21,10 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/store/head.html' => 1,
   ),
 ),false)) {
-function content_5f86cd01bfa988_53015389 (Smarty_Internal_Template $_smarty_tpl) {
-$_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
+function content_5f8807c0a36007_42881541 (Smarty_Internal_Template $_smarty_tpl) {
+echo $_smarty_tpl->tpl_vars['login']->value;?>
+
+<?php $_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div class="wrap full-wrap">
   <div class="main-wrap">
@@ -119,7 +121,8 @@ $NTD</h4>
 ">
                 <div class="form-group">
                   <label>數量：</label>
-                  <input type="number" value="1" class="form-control quantity">
+                  <input type="number" value="1" class="form-control quantity" max='<?php echo $_smarty_tpl->tpl_vars['product']->value['invetory'];?>
+' min='1'>
                 </div>
                 <div class="form-group pull-right">
                   <butten class="btn btn-danger add-to-cart">

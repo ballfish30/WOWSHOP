@@ -124,6 +124,15 @@ class Model
         return $sth->fetch();
     }
 
+    // userId 查詢 permission
+    public function selectPermissionUserId($id)
+    {
+        $sql = sprintf("select p.name from User as u join RoleUser as ru on u.id = ru.userId join Role as r on r.id = ru.roleId join PermissionsRole as pr on r.id = pr.roleId join Permissions as p on p.id = pr.perId where u.id = '%s'", $id);
+        $sth = $this->_dbHandle->prepare($sql);
+        $sth->execute();
+        return $sth->fetchAll();
+    }
+
     // 根據條件 (accountName) 查詢
     public function selectAccountName($accountName)
     {

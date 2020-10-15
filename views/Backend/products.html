@@ -38,8 +38,8 @@
         })
         .done(function (data) {
           $data = JSON.parse(data);
-          alert($data['message']);
           $this.parent().parent().remove();
+          alert($data['message']);
         })
     }
     

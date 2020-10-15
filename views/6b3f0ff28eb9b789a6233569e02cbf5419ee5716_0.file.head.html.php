@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-12 09:16:56
+/* Smarty version 3.1.34-dev-7, created on 2020-10-15 03:41:11
   from '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f841f08dc0ce3_01239081',
+  'unifunc' => 'content_5f87c4d759cb13_09428604',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6b3f0ff28eb9b789a6233569e02cbf5419ee5716' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/head.html',
-      1 => 1602494167,
+      1 => 1602732686,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_5f841f08dc0ce3_01239081 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f87c4d759cb13_09428604 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!doctype html>
 <!--
 	Itsy by FreeHTML5.co
@@ -74,7 +74,11 @@ function content_5f841f08dc0ce3_01239081 (Smarty_Internal_Template $_smarty_tpl)
                         <li class="menu-item">
                             <a href="/WOWShop/user/register">註冊</a></li>
                         <li class='menu-item'>
+                            <?php if ($_smarty_tpl->tpl_vars['login']->value) {?>
+                            <a href='/WOWShop/user/logout'>登出</a></li>
+                            <?php } else { ?>
                             <a href='/WOWShop/user/login'>登入</a></li>
+                            <?php }?>
                         <li class="menu-inline menu-item">
                             <a title="Facebook" href="https://www.facebook.com/groups/wowclassicchinese">
                                 <i class="fa fa-facebook"></i><span class="i">Facebook</span>

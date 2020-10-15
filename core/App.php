@@ -21,13 +21,29 @@ class App
         unset($url[0]);
         unset($url[1]);
         $params = $url ? array_values($url) : array();
-        // if ($methodName != 'login' and $methodName != 'register' and $methodName != 'admin' and $methodName != 'test') {
-        //     if (!isset($_SESSION['userId'])) {
-        //         include 'main.php';
-        //         $smarty->assign('message', '請登入帳號');
-        //         return $smarty->display('user/login.php');
-        //     }
-        // }
+        require_once 'class/Smarty.class.php';
+        $smarty = new Smarty;
+        $smarty->template_dir = 'views';
+        $smarty->compile_dir = 'views/';
+        $smarty->config_dir = 'demo/configs/';
+        $smarty->cache_dir = 'demo/cache/';
+        $smarty->error_reporting = "E_ERROR || E_WARNING";
+        if ($methodName != 'login' and $methodName != 'register' and $methodName != 'admin' and $methodName != 'test') {
+            //判斷是否登入
+            if (!isset($_COOKIE['userId'])){
+                $smarty->assign('message', '請登入帳號');
+                return $smarty->display('user/login.html');
+            }else{
+                //驗證登入資訊
+                $userId = $_COOKIE['userId'];
+                $accountName = $_COOKIE['accountName'];
+                $user = $this->model('User');
+                if (!password_verify($user->selectAccountName($accountName)['id'], $userId)){
+                    return $smarty->display('user/login.html');
+                }
+                // var_dump($user->selectPermissionUserId($user->selectAccountName($accountName)['id']));
+            }
+        }
         call_user_func_array(array($controller, $methodName), $params);
     }
 
@@ -38,5 +54,11 @@ class App
             $url = explode("/", $url);
             return $url;
         }
+    }
+
+    public function model($model)
+    {
+        require_once "models/$model.php";
+        return new $model();
     }
 }

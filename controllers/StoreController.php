@@ -5,6 +5,7 @@ class StoreController extends Controller
     public function index()
     {
         $smarty = $this->smarty();
+        $smarty->assign('login', $this->loginStatus());
         $smarty->assign('products', $this->model('Product')->selectAll());
         return $smarty->display('store/store.html');
     }
@@ -54,6 +55,7 @@ class StoreController extends Controller
     public function carts()
     {
         $smarty = $this->smarty();
+        $smarty->assign('login', $this->loginStatus());
         $smarty->assign('carts', $this->model('Cart')->selectCarts($_COOKIE['orderId']));
         return $smarty->display('store/carts.html');
     }
@@ -71,6 +73,7 @@ class StoreController extends Controller
     public function orderCheck()
     {
         $smarty = $this->smarty();
+        $smarty->assign('login', $this->loginStatus());
         $smarty->assign('carts', $this->model('Cart')->selectCarts($_COOKIE['orderId']));
         return $smarty->display('store/orderCheck.html');
     }
@@ -79,13 +82,16 @@ class StoreController extends Controller
     public function pay()
     {
         $carts = $this->model('Cart')->selectCarts($_COOKIE['orderId']);
+        $product = $this->model('Product');
         $total = 0;
         foreach ($carts as $cart) {
             $total += $cart['total'];
         }
         $data['subtotal'] = $total;
+        $data['receiver'] = $_POST['name'];
         $this->model('Order')->update($_COOKIE['orderId'], $data);
         $order = $this->model('Order')->select($_COOKIE['orderId']);
+        $data = array();
         include 'views/store/ECPay.Payment.Integration.php';
         try {
 
@@ -109,6 +115,10 @@ class StoreController extends Controller
 
             //訂單的商品資料
             foreach ($carts as $cart) {
+                $productInvetory = $product->select($cart['productId'])['invetory'];
+                $data['invetory'] = $productInvetory - $cart['quantity'];
+                $data = array();
+                $product->update($cart['productId'], $data);
                 array_push($obj->Send['Items'], array('Name' => "$cart[name]", 'Price' => $cart['price'],
                     'Currency' => "元", 'Quantity' => $cart['quantity'], 'URL' => "dedwed"));
             }
@@ -131,8 +141,11 @@ class StoreController extends Controller
     //已完成訂單
     public function orders()
     {
+        $user = $this->model('User');
+        $accountName = $_COOKIE['accountName'];
         $smarty = $this->smarty();
-        $smarty->assign('orders', $this->model('Order')->selectOrderDone($_COOKIE['userId']));
+        $smarty->assign('login', $this->loginStatus());
+        $smarty->assign('orders', $this->model('Order')->selectOrderDone($user->selectAccountName($accountName)['id']));
         return $smarty->display('store/orders.html');
     }
 
@@ -140,6 +153,7 @@ class StoreController extends Controller
     public function order($id)
     {
         $smarty = $this->smarty();
+        $smarty->assign('login', $this->loginStatus());
         $smarty->assign('carts', $this->model('Cart')->selectCarts($id));
         return $smarty->display('Store/order.html');
     }

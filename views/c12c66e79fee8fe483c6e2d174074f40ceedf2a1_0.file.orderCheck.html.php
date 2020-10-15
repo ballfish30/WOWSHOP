@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-12 07:03:31
+/* Smarty version 3.1.34-dev-7, created on 2020-10-15 08:44:02
   from '/Applications/MAMP/htdocs/WOWSHOP/views/store/orderCheck.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f83ffc3cdcc75_82186568',
+  'unifunc' => 'content_5f880bd23bbef3_81391042',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'c12c66e79fee8fe483c6e2d174074f40ceedf2a1' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/store/orderCheck.html',
-      1 => 1602486207,
+      1 => 1602751423,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/store/head.html' => 1,
   ),
 ),false)) {
-function content_5f83ffc3cdcc75_82186568 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f880bd23bbef3_81391042 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/store/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">
@@ -60,16 +60,8 @@ $_smarty_tpl->smarty->ext->_foreach->restore($_smarty_tpl, 1);?>
   <form id="form1" name="form1" method="post" action="/WOWShop/store/pay">
     <table width="300" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#F2F2F2">
       <tr>
-        <td width="100" align="center" valign="baseline">收件人姓名：</td>
+        <td width="100" align="center" valign="baseline">遊戲暱稱：</td>
         <td valign="baseline"><input type="text" name="name" id="name" required="required"/></td>
-      </tr>
-      <tr>
-        <td width="80" align="center" valign="baseline">收件人信箱：</td>
-        <td valign="baseline"><input type="email" name="email" id="email" required="required"/></td>
-      </tr>
-      <tr>
-        <td width="80" align="center" valign="baseline">收件人地址：</td>
-        <td valign="baseline"><input type="text"" name="address" id="address" required="required"/></td>
       </tr>
       <tr>
         <td colspan="2" align="center" bgcolor="#CCCCCC"><input type="submit" name="btnOK" id="btnOK" value="確認訂單" />

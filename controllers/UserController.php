@@ -6,6 +6,7 @@ class UserController extends Controller
     public function index()
     {
         $smarty = $this->smarty();
+        $smarty->assign('login', $this->loginStatus());
         return $smarty->display('user/login.html');
     }
 
@@ -31,9 +32,12 @@ class UserController extends Controller
             return $smarty->display('user/login.html');
         }
         $smarty->assign('userName', $user['userName']);
+        $this->setCookie('accountName', $user['accountName']);
         $this->setCookie('username', $user['userName']);
-        $this->setCookie('userId', $user['id']);
-        return $smarty->display('Backend/index.html');
+        $this->setCookie('userId', password_hash($user['id'], PASSWORD_DEFAULT));
+        require_once('BackendController.php');
+        $backend = new BackendController();
+        return $backend->index();
     }
 
     // 登出
@@ -44,7 +48,8 @@ class UserController extends Controller
         $this->delCookie('username');
         $this->delCookie('userId');
         $smarty->assign('message', '已登出');
-        $smarty->display('user/login.html');
+        $smarty->assign('login', $this->loginStatus());
+        return $this->login();
     }
 
     // 註冊
@@ -67,13 +72,16 @@ class UserController extends Controller
             $smarty->assign('userName', $data['userName']);
             $smarty->assign('email', $data['email']);
             $smarty->assign('message', '此帳號已註冊');
+            $smarty->assign('login', $this->loginStatus());
             return $smarty->display('user/register.html');
         }
         if ($user->add($data)) {
             $smarty->assign('message', '註冊成功，請登入');
-            return $smarty->display('user/login.html');
+            $smarty->assign('login', $this->loginStatus());
+            return $this->login();
         } else {
             $smarty->assign('message', '註冊失敗');
+            $smarty->assign('login', $this->loginStatus());
             return $smarty->display('user/register.html');
         }
     }

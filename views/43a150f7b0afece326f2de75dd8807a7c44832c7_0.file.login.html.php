@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-09-30 03:52:08
+/* Smarty version 3.1.34-dev-7, created on 2020-10-15 03:28:48
   from '/Applications/MAMP/htdocs/WOWSHOP/views/user/login.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f7400e83e9ac7_92998766',
+  'unifunc' => 'content_5f87c1f00db992_97312231',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '43a150f7b0afece326f2de75dd8807a7c44832c7' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/user/login.html',
-      1 => 1601437916,
+      1 => 1602732525,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/user/head.html' => 1,
   ),
 ),false)) {
-function content_5f7400e83e9ac7_92998766 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f87c1f00db992_97312231 (Smarty_Internal_Template $_smarty_tpl) {
 if ($_smarty_tpl->tpl_vars['message']->value) {?>
 <div class='alert alert-primary alert-dismissible fade show'>
   <strong>系統訊息!</strong> <?php echo $_smarty_tpl->tpl_vars['message']->value;?>
@@ -31,6 +31,7 @@ if ($_smarty_tpl->tpl_vars['message']->value) {?>
 <?php }
 $_smarty_tpl->_subTemplateRender('file:views/user/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
+<br><br><br><br>
 <!------ Include the above in your HEAD tag ---------->
 <div class="wrapper fadeInDown">
   <div id="formContent">
