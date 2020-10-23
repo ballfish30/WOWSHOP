@@ -1,6 +1,8 @@
 {{include file='views/backend/head.html'}}
 <div style="padding-top:7em;" align="center">
+  {{if $productCreate}}
   <a href="/WOWSHOP/backend/productCreate" class="create">新增</a>
+  {{/if}}
   <table text-align="center" text-valign="middle">
     <tr>
       <th>商品圖</th>
@@ -10,18 +12,26 @@
       <th>數量</th>
       <th>價格</th>
       <th>介紹</th>
+      {{if $productDelete}}
       <th>刪除</th>
+      {{/if}}
     </tr>
     {{foreach from=$products item=product name=foo}}
       <tr>
         <td><img height="100px" width="100px" src="data:image/jpg;base64,{{$product.img}}"/></td>
-        <td><a href="#" class="update"><pre>{{$product.name}}</pre></a></td>
+        {{if $productUpdate}}
+        <td><a href="/WOWSHOP/backend/productUpdate/{{$product.id}}" class="update"><pre>{{$product.name}}</pre></a></td>
+        {{else}}
+        <td><pre>{{$product.name}}</pre></td>
+        {{/if}}
         <td>{{$product.itemLevel}}</td>
         <td>{{$product.quality}}</td>
         <td>{{$product.invetory}}</td>
         <td>{{$product.price}}</td>
         <td>{{$product.introduction}}</td>
+        {{if $productDelete}}
         <td><button class="cancel" value="{{$product.id}}" type="button">刪除</button></td>
+        {{/if}}
       </tr>
     {{/foreach}}
   </table>

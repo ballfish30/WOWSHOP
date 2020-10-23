@@ -5,9 +5,9 @@ class BackendController extends Controller
     public function index()
     {
         $smarty = $this->smarty();
-        $smarty->assign('login', $this->loginStatus());
-        if (!$this->permissionCheck('後台權限')){
-            require_once('StoreController.php');
+        $smarty->assign('login', true);
+        if (!$this->permissionCheck('後台權限')) {
+            require_once 'StoreController.php';
             $store = new StoreController();
             return $store->index();
         }
@@ -18,7 +18,7 @@ class BackendController extends Controller
     public function members()
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('檢視會員')){
+        if (!$this->permissionCheck('檢視會員')) {
             return $this->index();
         }
         $members = $this->model('User');
@@ -32,20 +32,20 @@ class BackendController extends Controller
     {
         $user = $this->model('User');
         $userIsActive = $user->select($memberId)['isActive'];
-        if ($this->permissionCheck('啟用與停用會員')){
-            if ($userIsActive){
+        if ($this->permissionCheck('啟用與停用會員')) {
+            if ($userIsActive) {
                 $data['isActive'] = 0;
                 $user->update($memberId, $data);
                 $json = array("status" => "1", "message" => "已停用");
-            }else{
+            } else {
                 $data['isActive'] = 1;
                 $user->update($memberId, $data);
                 $json = array("status" => "1", "message" => "已啟用");
             }
-        }else{
+        } else {
             $json = array("status" => "0", "message" => "無此權限");
         }
-        
+
         echo json_encode($json);
     }
 
@@ -54,7 +54,7 @@ class BackendController extends Controller
     {
         $smarty = $this->smarty();
         $role = $this->model('Role');
-        if (!$this->permissionCheck('檢視權限')){
+        if (!$this->permissionCheck('檢視權限')) {
             return $this->index();
         }
         $permissionRole = $this->model('PermissionRole');
@@ -87,7 +87,7 @@ class BackendController extends Controller
     {
         $smarty = $this->smarty();
         $smarty->assign('login', $this->loginStatus());
-        if (!$this->permissionCheck('新增職位')){
+        if (!$this->permissionCheck('新增職位')) {
             return $this->index();
         }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -99,7 +99,7 @@ class BackendController extends Controller
         $role = $this->model('Role');
         $permissionRole = $this->model('permissionRole');
         $data['name'] = $_POST['name'];
-        $data['desc'] = $_POST['desc'];
+        $data['desc'] = htmlspecialchars($_POST['desc']);
         $role->add($data);
         $roleId = $role->selectName($_POST['name'])['id'];
         $data = [];
@@ -115,7 +115,7 @@ class BackendController extends Controller
     public function roleUpdate($roleId = null)
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('修改職位')){
+        if (!$this->permissionCheck('修改職位')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -136,7 +136,7 @@ class BackendController extends Controller
         //POST
         $permissionIds = $_POST['permissions'];
         $data['name'] = $_POST['name'];
-        $data['desc'] = $_POST['desc'];
+        $data['desc'] = htmlspecialchars($_POST['desc']);
         //roleUpdate
         $role->update($roleId, $data);
         //permissionRole create&delete
@@ -157,7 +157,7 @@ class BackendController extends Controller
     public function roleUserCreate()
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('新增管理')){
+        if (!$this->permissionCheck('新增管理')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -189,7 +189,7 @@ class BackendController extends Controller
     public function rolechange($Id)
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('修改管理')){
+        if (!$this->permissionCheck('修改管理')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -200,7 +200,7 @@ class BackendController extends Controller
             $smarty->assign('roles', $role->selectAll());
             $smarty->assign('user', $user->selectroleUserId($Id));
             return $smarty->display('Backend/rolechange.html');
-        //POST
+            //POST
         }
     }
 
@@ -208,7 +208,7 @@ class BackendController extends Controller
     public function categorys()
     {
         $smarty = $this->smarty();
-        if ($this->permissionCheck('檢視類別')){
+        if ($this->permissionCheck('檢視類別')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -221,7 +221,7 @@ class BackendController extends Controller
     public function categoryCreate()
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('新增類別')){
+        if (!$this->permissionCheck('新增類別')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -232,19 +232,31 @@ class BackendController extends Controller
         $image = $_FILES["fileToUpload"]["tmp_name"];
         $image = base64_encode(file_get_contents(addslashes($image)));
         $category = $this->model('Category');
-        $data['name'] = $_POST['name'];
+        $data['name'] = htmlspecialchars($_POST['name']);
         $data['icon'] = $image;
         $category->add($data);
         return $this->categorys();
     }
 
     //修改類別
-    public function categoryUpdate()
+    public function categoryUpdate($id)
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('修改類別')){
+        if (!$this->permissionCheck('修改類別')) {
             return $this->index();
         }
+        $category = $this->model('Category');
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $smarty->assign('category', $category->select($id));
+            return $smarty->display('Backend/categoryUpdate.html');
+        }
+        //POST
+        $image = $_FILES["fileToUpload"]["tmp_name"];
+        $image = base64_encode(file_get_contents(addslashes($image)));
+        $data['name'] = htmlspecialchars($_POST['name']);
+        $data['icon'] = $image;
+        $category->update($id, $data);
+        return $this->categorys();
 
     }
 
@@ -252,10 +264,10 @@ class BackendController extends Controller
     public function categoryDelete($id)
     {
         $category = $this->model('Category');
-        if ($this->permissionCheck('刪除類別')){
+        if ($this->permissionCheck('刪除類別')) {
             $category->delete($id);
             $json = array("status" => "1", "message" => "已刪除");
-        }else{
+        } else {
             $json = array("status" => "0", "message" => "無此權限");
         }
         echo json_encode($json);
@@ -265,7 +277,7 @@ class BackendController extends Controller
     public function secondCategory()
     {
         $smarty = $this->smarty();
-        if ($this->permissionCheck('檢視類別')){
+        if ($this->permissionCheck('檢視類別')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -289,7 +301,7 @@ class BackendController extends Controller
     public function secondCategoryCreate()
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('新增類別細項')){
+        if (!$this->permissionCheck('新增類別細項')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -299,7 +311,7 @@ class BackendController extends Controller
         }
         //POST
         $secondCategory = $this->model('SecondCategory');
-        $data['name'] = $_POST['name'];
+        $data['name'] = htmlspecialchars($_POST['name']);
         $data['categoryId'] = $_POST['category'];
         $secondCategory->add($data);
         return $this->secondCategory();
@@ -317,7 +329,7 @@ class BackendController extends Controller
     public function secondCategoryUpdate()
     {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('修改類別細項')){
+        if (!$this->permissionCheck('修改類別細項')) {
             return $this->index();
         }
         $smarty->assign('login', $this->loginStatus());
@@ -327,10 +339,10 @@ class BackendController extends Controller
     public function secondCategoryDelete($id)
     {
         $secondCategory = $this->model('SecondCategory');
-        if ($this->permissionCheck('刪除類別細項')){
+        if ($this->permissionCheck('刪除類別細項')) {
             $json = array("status" => "1", "message" => "已刪除");
             $secondCategory->delete($id);
-        }else{
+        } else {
             $json = array("status" => "0", "message" => "無此權限");
         }
         echo json_encode($json);
@@ -343,6 +355,15 @@ class BackendController extends Controller
         $smarty->assign('login', $this->loginStatus());
         $product = $this->model('Product');
         $smarty->assign('products', $product->selectAll());
+        if ($this->permissionCheck('新增商品')) {
+            $smarty->assign('productCreate', true);
+        }
+        if ($this->permissionCheck('刪除商品')) {
+            $smarty->assign('productDelete', true);
+        }
+        if ($this->permissionCheck('修改商品')) {
+            $smarty->assign('productUpdate', true);
+        }
         return $smarty->display('Backend/products.html');
     }
 
@@ -351,9 +372,6 @@ class BackendController extends Controller
     {
         $smarty = $this->smarty();
         $smarty->assign('login', $this->loginStatus());
-        if (!$this->permissionCheck('新增商品')){
-            return $this->index();
-        }
         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             $smarty->assign('categorys', $this->model('Category')->selectAll());
             return $smarty->display('Backend/productCreate.html');
@@ -362,8 +380,8 @@ class BackendController extends Controller
         $product = $this->model('Product');
         $image = $_FILES["fileToUpload"]["tmp_name"];
         $image = base64_encode(file_get_contents(addslashes($image)));
-        $data['name'] = $_POST['name'];
-        $data['introduction'] = $_POST['introduction'];
+        $data['name'] = htmlspecialchars($_POST['name']);
+        $data['introduction'] = htmlspecialchars($_POST['introduction']);
         $data['img'] = $image;
         $data['price'] = $_POST['price'];
         $data['invetory'] = $_POST['invetory'];
@@ -375,20 +393,38 @@ class BackendController extends Controller
     }
 
     //productUpdate
-    public function productUpdate(){
+    public function productUpdate($id)
+    {
         $smarty = $this->smarty();
-        if (!$this->permissionCheck('修改商品')){
-            return $this->index();
-        }
-    }
-    
-    //productDelete
-    public function productDelete($id){
         $product = $this->model('Product');
-        if ($this->permissionCheck('刪除類別細項')){
+        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+            $smarty->assign('product', $product->select($id));
+            $smarty->assign('categorys', $this->model('Category')->selectAll());
+            return $smarty->display('Backend/productUpdate.html');
+        }
+        //POST
+        $image = $_FILES["fileToUpload"]["tmp_name"];
+        $image = base64_encode(file_get_contents(addslashes($image)));
+        $data['name'] = htmlspecialchars($_POST['name']);
+        $data['introduction'] = htmlspecialchars($_POST['introduction']);
+        $data['img'] = $image;
+        $data['price'] = $_POST['price'];
+        $data['invetory'] = $_POST['invetory'];
+        $data['quality'] = $_POST['quality'];
+        $data['itemLevel'] = $_POST['itemLevel'];
+        $data['secondCategoryId'] = $_POST['secondCategory'];
+        $product->update($id, $data);
+        return $this->products();
+    }
+
+    //productDelete
+    public function productDelete($id)
+    {
+        $product = $this->model('Product');
+        if ($this->permissionCheck('刪除類別細項')) {
             $json = array("status" => "1", "message" => "已刪除");
             $product->delete($id);
-        }else{
+        } else {
             $json = array("status" => "0", "message" => "無此權限");
         }
         echo json_encode($json);
@@ -399,7 +435,7 @@ class BackendController extends Controller
     {
         $smarty = $this->smarty();
         $smarty->assign('login', $this->loginStatus());
-        if (!$this->permissionCheck('檢視訂單')){
+        if (!$this->permissionCheck('檢視訂單')) {
             return $this->index();
         }
         $order = $this->model('Order');
@@ -412,7 +448,7 @@ class BackendController extends Controller
     {
         $smarty = $this->smarty();
         $smarty->assign('login', $this->loginStatus());
-        if (!$this->permissionCheck('檢視訂單')){
+        if (!$this->permissionCheck('檢視訂單')) {
             return $this->index();
         }
         $smarty->assign('carts', $this->model('Cart')->selectCarts($id));

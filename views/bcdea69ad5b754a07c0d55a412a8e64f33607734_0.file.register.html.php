@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-13 08:51:15
+/* Smarty version 3.1.34-dev-7, created on 2020-10-16 07:54:12
   from '/Applications/MAMP/htdocs/WOWSHOP/views/user/register.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f856a8380e268_14883058',
+  'unifunc' => 'content_5f8951a4042c88_51490695',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'bcdea69ad5b754a07c0d55a412a8e64f33607734' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/user/register.html',
-      1 => 1602578955,
+      1 => 1602834849,
       2 => 'file',
     ),
   ),
@@ -21,7 +21,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/user/head.html' => 1,
   ),
 ),false)) {
-function content_5f856a8380e268_14883058 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f8951a4042c88_51490695 (Smarty_Internal_Template $_smarty_tpl) {
 if ($_smarty_tpl->tpl_vars['message']->value) {?>
 <div class='alert alert-primary alert-dismissible fade show'>
   <strong>系統訊息!</strong> <?php echo $_smarty_tpl->tpl_vars['message']->value;?>
@@ -44,7 +44,7 @@ $_smarty_tpl->_subTemplateRender('file:views/user/head.html', $_smarty_tpl->cach
     </div>
 
     <!-- Login Form -->
-    <form method="post" action="/WOWSHOP/user/register"> 
+    <form id='form1' method="post" action="/WOWSHOP/user/register"> 
       <input type="text" id="login" class="fadeIn second" name="accountName" placeholder="accountName" required="required">
       <input type="password" id="password" class="fadeIn third" name="passwd" placeholder="password" required="required">
       <input type="text" name="userName" class="fadeIn fourth" placeholder="userName" required="required" value="<?php echo $_smarty_tpl->tpl_vars['userName']->value;?>
@@ -62,5 +62,51 @@ $_smarty_tpl->_subTemplateRender('file:views/user/head.html', $_smarty_tpl->cach
     </div>
 
   </div>
-</div><?php }
+</div>
+<?php echo '<script'; ?>
+>
+  $("input[name=accountName]").on("blur", function() {
+    $this = $(this);
+    var re = /^[A-Za-z0-9]+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('帳號錯誤');
+    }
+  });
+  $("input[name=passwd]").on("blur", function() {
+    $this = $(this);
+    var re = /^[A-Za-z0-9]+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('密碼錯誤');
+    }
+  });
+  $("input[name=userName]").on("blur", function() {
+    $this = $(this);
+    var re = /^[A-Za-z0-9]+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('暱稱錯誤');
+    }
+  });
+  $("input[name=email]").on("blur", function() {
+    $this = $(this);
+    var re = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('信箱錯誤');
+    }
+  });
+  $("input[name=phone]").on("blur", function() {
+    $this = $(this);
+    var re = /^[0-9]*[1-9][0-9]*$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('電話錯誤');
+    }
+    return false;
+  });
+<?php echo '</script'; ?>
+>
+<?php }
 }

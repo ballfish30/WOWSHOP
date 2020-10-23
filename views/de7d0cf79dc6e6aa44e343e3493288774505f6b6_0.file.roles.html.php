@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-14 02:04:43
+/* Smarty version 3.1.34-dev-7, created on 2020-10-16 03:01:03
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/roles.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f865cbb014d66_98107287',
+  'unifunc' => 'content_5f890cefb867a6_54560079',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'de7d0cf79dc6e6aa44e343e3493288774505f6b6' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/roles.html',
-      1 => 1602641080,
+      1 => 1602815578,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/footer.html' => 1,
   ),
 ),false)) {
-function content_5f865cbb014d66_98107287 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f890cefb867a6_54560079 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">

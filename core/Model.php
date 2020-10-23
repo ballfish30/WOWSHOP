@@ -125,18 +125,18 @@ class Model
     }
 
     // userId 查詢 permission
-    public function selectPermissionUserId($id)
+    public function selectPermissionUserId($id, $permission)
     {
-        $sql = sprintf("select p.name from User as u join RoleUser as ru on u.id = ru.userId join Role as r on r.id = ru.roleId join PermissionsRole as pr on r.id = pr.roleId join Permissions as p on p.id = pr.perId where u.id = '%s'", $id);
+        $sql = sprintf("select p.name from User as u join RoleUser as ru on u.id = ru.userId join Role as r on r.id = ru.roleId join PermissionsRole as pr on r.id = pr.roleId join Permissions as p on p.id = pr.perId where u.id = '%s' and p.name = '%s'", $id, $permission);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
-        return $sth->fetchAll();
+        return $sth->fetch();
     }
 
     // 根據條件 (accountName) 查詢
     public function selectAccountName($accountName)
     {
-        $sql = sprintf("select * from `%s` where `accountName` = '%s'", $this->_table, $accountName);
+        $sql = sprintf("select * from `%s` where `accountName` = '%s' and isActive = 1", $this->_table, $accountName);
         $sth = $this->_dbHandle->prepare($sql);
         $sth->execute();
         return $sth->fetch();

@@ -8,7 +8,7 @@
       {{foreach from=$categorys item=category name=foo}}
       <tr>
         <td><img height="50px" width="50px" src="data:image/jpg;base64,{{$category.icon}}"/></td>
-        <td><a href="#" class="update"><pre>{{$category.name}}</pre></a></td>
+        <td><a href="/WOWSHOP/backend/categoryUpdate/{{$category.id}}" class="update"><pre>{{$category.name}}</pre></a></td>
         <td><button class="cancel" value="{{$category.id}}" type="button">刪除</button> </td>
       </tr>         
       {{/foreach}}

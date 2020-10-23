@@ -99,9 +99,8 @@ class Controller
     public function permissionCheck($permission=null){
         $user = $this->model('User');
         $accountName = $_COOKIE['accountName'];
-        $permissions = array_column($user->selectPermissionUserId($user->selectAccountName($accountName)['id']), 'name');
 
-        if (in_array('後台權限', $permissions) and in_array($permission, $permissions)){
+        if ($user->selectPermissionUserId($user->selectAccountName($accountName)['id'], $permission)){
             return true;
         }
         return false;

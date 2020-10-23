@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-14 07:30:50
+/* Smarty version 3.1.34-dev-7, created on 2020-10-16 01:38:36
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/categorys.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f86a92a302065_20131448',
+  'unifunc' => 'content_5f88f99c2936b3_34129650',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '7cd6e91702a98d3e6fc2fd9eacfc0e7b781096c9' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/categorys.html',
-      1 => 1602660628,
+      1 => 1602812310,
       2 => 'file',
     ),
   ),
@@ -22,7 +22,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/footer.html' => 1,
   ),
 ),false)) {
-function content_5f86a92a302065_20131448 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f88f99c2936b3_34129650 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">
@@ -41,7 +41,8 @@ $_smarty_tpl->tpl_vars['category']->do_else = false;
       <tr>
         <td><img height="50px" width="50px" src="data:image/jpg;base64,<?php echo $_smarty_tpl->tpl_vars['category']->value['icon'];?>
 "/></td>
-        <td><a href="#" class="update"><pre><?php echo $_smarty_tpl->tpl_vars['category']->value['name'];?>
+        <td><a href="/WOWSHOP/backend/categoryUpdate/<?php echo $_smarty_tpl->tpl_vars['category']->value['id'];?>
+" class="update"><pre><?php echo $_smarty_tpl->tpl_vars['category']->value['name'];?>
 </pre></a></td>
         <td><button class="cancel" value="<?php echo $_smarty_tpl->tpl_vars['category']->value['id'];?>
 " type="button">刪除</button> </td>

@@ -15,6 +15,16 @@ CREATE TABLE `User` (
   `emailVerifyCode` varchar(60)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+drop table if exists `Ssid`;
+CREATE TABLE `Ssid`
+(
+  `id` int(11) not null AUTO_INCREMENT PRIMARY KEY,
+  `userId` int(11) not null,
+  `ssid` varchar(60) NOT NULL,
+  `lastLogin` datetime default NOW(),
+  CONSTRAINT fkSsidUserId FOREIGN KEY (userId) REFERENCES User(id) ON DELETE CASCADE
+)
+
 drop table if exists `Role`;
 CREATE TABLE `Role` (
   `id` int(2) not null AUTO_INCREMENT PRIMARY KEY,
@@ -74,8 +84,8 @@ CREATE TABLE `Product` (
   `quality` enum('粗糙','普通','優秀','精良','史詩','神器') not null,
   `itemLevel` int(3) not null,
   `secondCategoryId` int(11) not null,
-  CONSTRAINT fkProductSecondCategoryId FOREIGN KEY (secondCategoryId) REFERENCES SecondCategory(id) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+   CONSTRAINT fkProductCategoryId FOREIGN KEY (secondCategoryId) REFERENCES secondCategory(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
 
 drop table if exists `Orders`;
 CREATE TABLE `Orders` (

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.34-dev-7, created on 2020-10-14 03:33:44
+/* Smarty version 3.1.34-dev-7, created on 2020-10-16 01:14:43
   from '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/members.html' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.34-dev-7',
-  'unifunc' => 'content_5f8671981ec770_12008467',
+  'unifunc' => 'content_5f88f40332db61_18859912',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'f00756acaebddf88c43c4440767f3807ba620c46' => 
     array (
       0 => '/Applications/MAMP/htdocs/WOWSHOP/views/Backend/members.html',
-      1 => 1602646416,
+      1 => 1602810879,
       2 => 'file',
     ),
   ),
@@ -21,13 +21,13 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'file:views/backend/head.html' => 1,
   ),
 ),false)) {
-function content_5f8671981ec770_12008467 (Smarty_Internal_Template $_smarty_tpl) {
+function content_5f88f40332db61_18859912 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_subTemplateRender('file:views/backend/head.html', $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array(), 0, false);
 ?>
 <div style="padding-top:7em;" align="center">
   <table>
     <tr>
-      <th>編號</th><th>會員名稱</th><th>會員級別</th><th>啟用／停用</th>
+      <th>編號</th><th>會員名稱</th><th>會員信箱</th><th>啟用／停用</th>
     </tr>
     <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['members']->value, 'member', false, NULL, 'foo', array (

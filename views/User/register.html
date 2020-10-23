@@ -18,7 +18,7 @@
     </div>
 
     <!-- Login Form -->
-    <form method="post" action="/WOWSHOP/user/register"> 
+    <form id='form1' method="post" action="/WOWSHOP/user/register"> 
       <input type="text" id="login" class="fadeIn second" name="accountName" placeholder="accountName" required="required">
       <input type="password" id="password" class="fadeIn third" name="passwd" placeholder="password" required="required">
       <input type="text" name="userName" class="fadeIn fourth" placeholder="userName" required="required" value="{{$userName}}">
@@ -34,3 +34,46 @@
 
   </div>
 </div>
+<script>
+  $("input[name=accountName]").on("blur", function() {
+    $this = $(this);
+    var re = /^[A-Za-z0-9]+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('帳號錯誤');
+    }
+  });
+  $("input[name=passwd]").on("blur", function() {
+    $this = $(this);
+    var re = /^[A-Za-z0-9]+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('密碼錯誤');
+    }
+  });
+  $("input[name=userName]").on("blur", function() {
+    $this = $(this);
+    var re = /^[A-Za-z0-9]+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('暱稱錯誤');
+    }
+  });
+  $("input[name=email]").on("blur", function() {
+    $this = $(this);
+    var re = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('信箱錯誤');
+    }
+  });
+  $("input[name=phone]").on("blur", function() {
+    $this = $(this);
+    var re = /^[0-9]*[1-9][0-9]*$/;
+    var OK = re.exec($this.val())
+    if (!OK && $this.val()){
+      alert('電話錯誤');
+    }
+    return false;
+  });
+</script>
